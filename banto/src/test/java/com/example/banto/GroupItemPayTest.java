@@ -1,7 +1,6 @@
 package com.example.banto;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -9,11 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.example.banto.Entitys.GroupBuys;
-import com.example.banto.Entitys.GroupItemPays;
-import com.example.banto.Repositorys.GroupBuyPayRepository;
-import com.example.banto.Repositorys.GroupBuyRepository;
 
 import jakarta.transaction.Transactional;
 

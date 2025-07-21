@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.banto.DAOs.WalletDAO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.DTOs.WalletDTO;
 
 @Service
 public class WalletService {

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.example.banto.Entitys.SellerAuths;
+import com.example.banto.SellerAuths.SellerAuths;
 
 @Repository
 public interface ApplyRepository extends JpaRepository<SellerAuths, Integer> {

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.banto.Entitys.Carts;
+import com.example.banto.Carts.Carts;
 
 public interface CartRepository extends JpaRepository<Carts, Integer> {
 	@Query("SELECT c FROM Carts c WHERE c.user.id = :userId")

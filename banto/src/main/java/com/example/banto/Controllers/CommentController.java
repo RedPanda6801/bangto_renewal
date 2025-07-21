@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.banto.DTOs.CommentDTO;
+import com.example.banto.Comments.CommentDTO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.JWTs.JwtUtil;
 import com.example.banto.Services.CommentService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/api")

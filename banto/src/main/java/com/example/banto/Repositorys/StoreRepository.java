@@ -8,13 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.example.banto.DTOs.StoreDTO;
-import com.example.banto.Entitys.Stores;
+import com.example.banto.Stores.StoreDTO;
+import com.example.banto.Stores.Stores;
 
 
 @Repository
 public interface StoreRepository extends JpaRepository<Stores, Integer> {
-	@Query("SELECT new com.example.banto.DTOs.StoreDTO(s.id, s.name, s.busiNum) FROM Stores s WHERE s.seller.id = :sellerId")
+	@Query("SELECT new com.example.banto.Stores.StoreDTO(s.id, s.name, s.busiNum) FROM Stores s WHERE s.seller.id = :sellerId")
 	public List<StoreDTO> findAllBySellerId(@Param("sellerId") Integer sellerId);
 
 	@Query("SELECT s FROM Stores s WHERE s.seller.id = :sellerId")

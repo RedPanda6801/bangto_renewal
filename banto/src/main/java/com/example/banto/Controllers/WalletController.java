@@ -9,15 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.banto.DAOs.AuthDAO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.DTOs.SellerDTO;
-import com.example.banto.DTOs.WalletDTO;
-import com.example.banto.JWTs.JwtUtil;
 import com.example.banto.Services.WalletService;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/api")

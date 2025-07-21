@@ -1,14 +1,12 @@
 package com.example.banto.Services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.banto.DAOs.PayDAO;
 import com.example.banto.DTOs.PayDTO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.DTOs.SoldItemDTO;
+import com.example.banto.SoldItems.SoldItemDTO;
 
 @Service
 public class PayService {

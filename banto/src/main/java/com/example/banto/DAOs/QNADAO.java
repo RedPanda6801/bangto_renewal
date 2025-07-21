@@ -1,7 +1,6 @@
 package com.example.banto.DAOs;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,13 +15,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.example.banto.DTOs.PageDTO;
-import com.example.banto.DTOs.QNADTO;
+import com.example.banto.Qnas.QNADTO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.Entitys.Items;
-import com.example.banto.Entitys.QNAs;
-import com.example.banto.Entitys.Sellers;
-import com.example.banto.Entitys.Stores;
-import com.example.banto.Entitys.Users;
+import com.example.banto.Items.Items;
+import com.example.banto.Qnas.QNAs;
+import com.example.banto.Sellers.Sellers;
+import com.example.banto.Stores.Stores;
+import com.example.banto.Users.Users;
 import com.example.banto.Repositorys.ItemRepository;
 import com.example.banto.Repositorys.QNARepository;
 import com.example.banto.Repositorys.SellerRepository;

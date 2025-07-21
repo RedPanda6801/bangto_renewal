@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.banto.DAOs.CommentDAO;
-import com.example.banto.DTOs.CommentDTO;
+import com.example.banto.Comments.CommentDTO;
 import com.example.banto.DTOs.ResponseDTO;
 
 @Service

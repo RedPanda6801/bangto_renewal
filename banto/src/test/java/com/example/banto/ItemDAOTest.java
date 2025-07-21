@@ -1,11 +1,9 @@
 package com.example.banto;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Optional;
 
-import com.example.banto.Entitys.Options;
-import com.example.banto.Entitys.QNAs;
+import com.example.banto.Options.Options;
+import com.example.banto.Qnas.QNAs;
 import com.example.banto.Repositorys.OptionRepository;
 import com.example.banto.Repositorys.QNARepository;
 import org.assertj.core.api.Assertions;
@@ -19,8 +17,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.example.banto.Entitys.Items;
-import com.example.banto.Entitys.Stores;
+import com.example.banto.Items.Items;
+import com.example.banto.Stores.Stores;
 import com.example.banto.Repositorys.ItemRepository;
 import com.example.banto.Repositorys.StoreRepository;
 

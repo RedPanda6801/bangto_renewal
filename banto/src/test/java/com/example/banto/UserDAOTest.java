@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.banto.Entitys.Users;
-import com.example.banto.Repositorys.UserRepository;
+import com.example.banto.Users.Users;
+import com.example.banto.Users.UserRepository;
 
 import jakarta.transaction.Transactional;
 

@@ -1,7 +1,5 @@
 package com.example.banto.Controllers;
 
-import java.net.http.HttpRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,14 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.banto.DAOs.AuthDAO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.DTOs.SellerDTO;
-import com.example.banto.JWTs.JwtUtil;
 import com.example.banto.Services.SellerService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller

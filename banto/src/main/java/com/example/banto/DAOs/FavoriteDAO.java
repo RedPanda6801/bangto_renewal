@@ -13,14 +13,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.example.banto.DTOs.FavoriteDTO;
-import com.example.banto.DTOs.ItemDTO;
+import com.example.banto.Items.ItemDTO;
 import com.example.banto.DTOs.PageDTO;
 import com.example.banto.DTOs.ResponseDTO;
 import com.example.banto.Entitys.Favorites;
-import com.example.banto.Entitys.Items;
-import com.example.banto.Entitys.Options;
-import com.example.banto.Entitys.Stores;
-import com.example.banto.Entitys.Users;
+import com.example.banto.Items.Items;
+import com.example.banto.Users.Users;
 import com.example.banto.Repositorys.FavoriteRepository;
 import com.example.banto.Repositorys.ItemRepository;
 

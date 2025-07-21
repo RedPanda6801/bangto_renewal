@@ -3,10 +3,6 @@ package com.example.banto.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,19 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.banto.DAOs.AuthDAO;
-import com.example.banto.DTOs.ItemDTO;
-import com.example.banto.DTOs.OptionDTO;
-import com.example.banto.DTOs.PageDTO;
+import com.example.banto.Items.ItemDTO;
+import com.example.banto.Options.OptionDTO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.Entitys.CategoryType;
-import com.example.banto.Entitys.Items;
-import com.example.banto.Entitys.Options;
-import com.example.banto.JWTs.JwtUtil;
-import com.example.banto.Repositorys.ItemRepository;
 import com.example.banto.Services.ItemService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/api")

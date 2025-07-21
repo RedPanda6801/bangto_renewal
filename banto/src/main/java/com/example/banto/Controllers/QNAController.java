@@ -1,20 +1,13 @@
 package com.example.banto.Controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.banto.DTOs.FavoriteDTO;
-import com.example.banto.DTOs.ItemDTO;
-import com.example.banto.DTOs.QNADTO;
+import com.example.banto.Qnas.QNADTO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.JWTs.JwtUtil;
 import com.example.banto.Services.QNAService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/api")

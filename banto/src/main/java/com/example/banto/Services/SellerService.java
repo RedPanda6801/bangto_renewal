@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.banto.DAOs.SellerDAO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.DTOs.SellerDTO;
 
 @Service
 public class SellerService {

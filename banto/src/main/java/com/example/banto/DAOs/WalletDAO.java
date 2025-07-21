@@ -7,10 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.DTOs.WalletDTO;
-import com.example.banto.Entitys.Users;
-import com.example.banto.Entitys.Wallets;
-import com.example.banto.Repositorys.UserRepository;
+import com.example.banto.Users.Users;
+import com.example.banto.Users.UserRepository;
 import com.example.banto.Repositorys.WalletRepository;
 
 import jakarta.transaction.Transactional;

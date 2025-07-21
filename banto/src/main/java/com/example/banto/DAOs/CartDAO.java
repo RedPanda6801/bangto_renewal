@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.example.banto.DTOs.CartDTO;
+import com.example.banto.Carts.CartDTO;
 import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.Entitys.Carts;
-import com.example.banto.Entitys.Items;
-import com.example.banto.Entitys.Options;
-import com.example.banto.Entitys.Users;
+import com.example.banto.Carts.Carts;
+import com.example.banto.Items.Items;
+import com.example.banto.Options.Options;
+import com.example.banto.Users.Users;
 import com.example.banto.Repositorys.CartRepository;
 import com.example.banto.Repositorys.ItemRepository;
 import com.example.banto.Repositorys.OptionRepository;

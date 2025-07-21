@@ -6,24 +6,27 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.banto.DTOs.*;
-import com.example.banto.Entitys.*;
+import com.example.banto.Enums.ApplyType;
 import com.example.banto.Repositorys.StoreRepository;
+import com.example.banto.SellerAuths.ProcessDTO;
+import com.example.banto.SellerAuths.SellerAuthDTO;
+import com.example.banto.SellerAuths.SellerAuths;
+import com.example.banto.Sellers.Sellers;
+import com.example.banto.Stores.StoreDTO;
+import com.example.banto.Stores.Stores;
+import com.example.banto.Users.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.example.banto.Repositorys.ApplyRepository;
 import com.example.banto.Repositorys.SellerRepository;
-import com.example.banto.Repositorys.UserRepository;
 
 import jakarta.transaction.Transactional;
-
-import com.example.banto.Configs.EnvConfig;
 
 @Component
 public class ApplyDAO {
@@ -45,9 +48,9 @@ public class ApplyDAO {
 				return new ResponseDTO(new ArrayList<SellerAuths>(), null);
 			}
 			else {
-				List<ApplyDTO> applyList = new ArrayList<ApplyDTO>();
+				List<SellerAuthDTO> applyList = new ArrayList<SellerAuthDTO>();
 				for(SellerAuths auth : sellerAuths) {					
-					ApplyDTO dto = ApplyDTO.toDTO(auth);
+					SellerAuthDTO dto = SellerAuthDTO.toDTO(auth);
 					applyList.add(dto);
 				}
 				return new ResponseDTO(applyList, null);
@@ -139,9 +142,9 @@ public class ApplyDAO {
 			if(applies.isEmpty()) {
 				throw new Exception("판매자 인증 신청서가 없습니다.");
 			}
-			List<ApplyDTO> applyList = new ArrayList<ApplyDTO>();
+			List<SellerAuthDTO> applyList = new ArrayList<SellerAuthDTO>();
 			for(SellerAuths apply : applies) {
-				ApplyDTO dto = ApplyDTO.toDTO(apply);
+				SellerAuthDTO dto = SellerAuthDTO.toDTO(apply);
 				applyList.add(dto);
 			}
 			return new ResponseDTO(applyList, new PageDTO(applies.getSize(), applies.getTotalElements(), applies.getTotalPages()));
@@ -160,7 +163,7 @@ public class ApplyDAO {
 				throw new Exception("존재하지 않는 판매자 인증 신청서입니다.");
 			}
 			else {
-				ApplyDTO dto = new ApplyDTO();
+				SellerAuthDTO dto = new SellerAuthDTO();
 				SellerAuths auth = sellerAuthOpt.get();
 				dto.setApplyDate(auth.getApplyDate());
 				dto.setAuth(auth.getAuth());

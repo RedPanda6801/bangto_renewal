@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.banto.DAOs.ItemDAO;
-import com.example.banto.DTOs.ItemDTO;
-import com.example.banto.DTOs.OptionDTO;
+import com.example.banto.Items.ItemDTO;
+import com.example.banto.Options.OptionDTO;
 import com.example.banto.DTOs.ResponseDTO;
 
 @Service

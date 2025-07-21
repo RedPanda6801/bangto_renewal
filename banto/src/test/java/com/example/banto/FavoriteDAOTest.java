@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.banto.Entitys.Items;
+import com.example.banto.Items.Items;
 import com.example.banto.Repositorys.ItemRepository;
 
 import jakarta.transaction.Transactional;

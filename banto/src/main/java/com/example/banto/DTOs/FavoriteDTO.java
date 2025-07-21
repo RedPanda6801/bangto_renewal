@@ -1,10 +1,7 @@
 package com.example.banto.DTOs;
 
-import java.util.List;
-
 import com.example.banto.Entitys.Favorites;
-import com.example.banto.Entitys.Items;
-import com.example.banto.Entitys.SellerAuths;
+import com.example.banto.Items.Items;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

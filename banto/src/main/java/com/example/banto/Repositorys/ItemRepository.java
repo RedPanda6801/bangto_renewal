@@ -1,16 +1,14 @@
 package com.example.banto.Repositorys;
 
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.banto.Entitys.CategoryType;
-import com.example.banto.Entitys.Items;
+import com.example.banto.Enums.CategoryType;
+import com.example.banto.Items.Items;
 
 public interface ItemRepository extends JpaRepository<Items, Integer> {
 	

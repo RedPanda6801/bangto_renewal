@@ -1,13 +1,10 @@
 package com.example.banto.Services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.banto.DAOs.QNADAO;
-import com.example.banto.DTOs.FavoriteDTO;
-import com.example.banto.DTOs.QNADTO;
+import com.example.banto.Qnas.QNADTO;
 import com.example.banto.DTOs.ResponseDTO;
 
 @Service
