@@ -34,11 +34,11 @@ public class JwtUtil {
     }*/
 	
 	//토큰 발급(이메일 파라미터 필요, 토큰 문자열 반환)
-	public String generateToken(Integer userId) {
+	public String generateToken(Long userId) {
 		String SECRET_KEY = envConfig.get("JWT_SECRET");
 		Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 		return Jwts.builder()
-                .setSubject(Integer.toString(userId))
+                .setSubject(Long.toString(userId))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
                 .signWith(key, SignatureAlgorithm.HS256)

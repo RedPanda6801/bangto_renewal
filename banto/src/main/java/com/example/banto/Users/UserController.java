@@ -1,25 +1,23 @@
 package com.example.banto.Users;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.banto.DTOs.ResponseDTO;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
-	private final UserService userService;
 
-	UserController(UserService userService){
-		this.userService = userService;
-	}
+	private final UserService userService;
 	
 	// 회원가입 기능
 	@PostMapping("/sign")
@@ -27,70 +25,54 @@ public class UserController {
 		userService.sign(dto);
 		return ResponseEntity.ok().body(null);
 	}
-	
 	// 로그인 기능
 	@PostMapping("/login")
-	public ResponseEntity login(@Valid @RequestBody UserDTO dto) {
-		try {
-			ResponseDTO token = userService.login(dto);
-			return ResponseEntity.ok().body(token);
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<?> login(@Valid @RequestBody LoginDTO dto) {
+		String token = userService.login(dto);
+		return ResponseEntity.ok().body(
+			new ResponseDTO(token, null)
+		);
 	}
-	
 	// 내정보 조회
-	@GetMapping("/user/get-info")
-	public ResponseEntity getUser() {
-		try {
-			ResponseDTO user = userService.getUser();
-			return ResponseEntity.ok().body(user);
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	@GetMapping("/user")
+	public ResponseEntity<?> getUser() {
+		UserDTO user = userService.getUser();
+		return ResponseEntity.ok().body(
+			new ResponseDTO(user, null)
+		);
+	}
+	// 유저 단일 조회(관리자)
+	@GetMapping("/user/admin/{userId}")
+	public ResponseEntity<?> getUserForAdmin(@PathVariable("userId") Long userId) {
+		UserDTO user = userService.getUserForAdmin(userId);
+		return ResponseEntity.ok().body(
+			new ResponseDTO(user, null)
+		);
+	}
+	// 유저 전체 정보 조회(관리자)
+	@GetMapping("/user/admin/get-list/{page}")
+	public ResponseEntity<?> getUserListForAdmin(@PathVariable("page") Integer page) {
+			ArrayList<UserDTO> user = userService.getUserListForAdmin(page);
+			return ResponseEntity.ok().body(
+				new ResponseDTO(user, null));
 	}
 	// 내정보 수정
-	@PostMapping("/user/modify")
-	public ResponseEntity modifyUser(@RequestBody UserDTO dto) {
-		try {
-			userService.modifyUser(dto);
-			return ResponseEntity.ok().body(null);
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	@PutMapping("/user")
+	public ResponseEntity<?> updateUser(@RequestBody UserDTO dto) {
+		userService.update(dto);
+		return ResponseEntity.ok().body(null);
 	}
-	
 	// 회원탈퇴
-	@PostMapping("/user/delete-me")
-	public ResponseEntity deleteMyself() {
+	@Delete("/user")
+	public ResponseEntity<?> deleteUser() {
 		try {
-			userService.deleteMyself();
+			userService.delete();
 			return ResponseEntity.ok().body("회원탈퇴 완료");
 		}catch(Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	
-	// 유저 전체 정보 조회(관리자)
-	@GetMapping("/manager/user/get-list/{page}")
-	public ResponseEntity getUserListManager(@PathVariable("page") Integer page) {
-		try {
-			ResponseDTO user = userService.getUserListForRoot(page);
-			return ResponseEntity.ok().body(user);
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
-	// 유저 단일 조회(관리자)
-	@GetMapping("/manager/user/get-info/{userId}")
-	public ResponseEntity getUserManager(@PathVariable("userId") Integer userId) {
-		try {
-			ResponseDTO user = userService.getUserForRoot(userId);
-			return ResponseEntity.ok().body(user);
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
+
 	// 유저 단일 수정(관리자)
 	@PostMapping("/manager/user/modify/{userId}")
 	public ResponseEntity modifyUserManager(@PathVariable("userId") Integer userId, @RequestBody UserDTO dto) {

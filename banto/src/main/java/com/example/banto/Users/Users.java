@@ -14,6 +14,7 @@ import com.example.banto.SoldItems.SoldItems;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
@@ -21,7 +22,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Users {
-
     @Id
     @Column(name="ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,15 +100,18 @@ public class Users {
 
     public static Users toEntity(UserDTO dto) {
         return Users.builder()
-                .id(dto.getId())
-                .email(dto.getEmail())
-                .pw(dto.getPw())
-                .name(dto.getName())
-                .addr(dto.getAddr())
-                .phone(dto.getPhone())
-                .regDate(dto.getRegDate())
-                .snsAuth(dto.getSnsAuth())
-                .cash(dto.getCash())
-                .build();
+            .id(dto.getId())
+            .email(dto.getEmail())
+            .pw(dto.getPw())
+            .name(dto.getName())
+            .addr(dto.getAddr())
+            .phone(dto.getPhone())
+            .regDate(
+                dto.getRegDate() != null ?
+                    dto.getRegDate() : LocalDateTime.now()
+            )
+            .snsAuth(dto.getSnsAuth())
+            .cash(dto.getCash() != null ? dto.getCash() : 0)
+            .build();
     }
 }
