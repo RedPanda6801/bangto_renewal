@@ -33,15 +33,14 @@ public class Items {
     
     @Column(name="CONTENT", nullable=false)
     private String content;
-    
-    @Column(name="IMG")
-    private String img;
+
+    @OneToMany(mappedBy="item", cascade = CascadeType.ALL)  // 추가: cascade 설정
+    private List<ItemImages> itemImages;
 
     @ManyToOne
     @JoinColumn(name="STORE_PK")
     private Stores store;
 
-    @JsonIgnore
     @OneToMany(mappedBy="item", cascade = CascadeType.ALL)  // 추가: cascade 설정
     private List<Options> options;
 
@@ -58,7 +57,7 @@ public class Items {
     			.title(dto.getTitle())
     			.price(dto.getPrice())
     			.content(dto.getContent())
-    			.category(CategoryType.valueOf(dto.getCategory()))
+    			.category(dto.getCategory())
     			.build();
     }
 }

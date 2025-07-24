@@ -1,12 +1,22 @@
 package com.example.banto.Items;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.example.banto.Carts.CartDTO;
 import com.example.banto.Carts.Carts;
+import com.example.banto.Comments.CommentDTO;
 import com.example.banto.Comments.Comments;
+import com.example.banto.DTOs.FavoriteDTO;
 import com.example.banto.Entitys.Favorites;
+import com.example.banto.Enums.CategoryType;
+import com.example.banto.Options.OptionDTO;
 import com.example.banto.Options.Options;
+import com.example.banto.Qnas.QNADTO;
 import com.example.banto.Qnas.QNAs;
+import com.example.banto.Stores.StoreDTO;
 import com.example.banto.Stores.Stores;
+import com.example.banto.Utils.DTOMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -24,78 +34,68 @@ public class ItemDTO {
 
     private String title;
 
-	private String category;
+	private CategoryType category;
 
     private Integer price;
     
     private String content;
 
-    private String img;
-    
-    private Integer amount;
-    
     private Long storePk;
-    
-    private Integer star;
-    
-    //@JsonIgnore
-    private Stores store;
-    
-    private List<QNAs> qnas;
 
-    private List<Comments> comments;
-
-    private List<Options> options;
-  
-    private List<Favorites> favorites;
-
-    private List<Carts> carts;
-    
-    @JsonIgnore
     private String storeName;
-    
-    @JsonIgnore
-    private String priceSort;
-    
-    @JsonIgnore
+
+    private String sellerName;
+
+    private Integer star;
+
+    // 정렬 기준 필드
+    private Integer priceSort;
     private Integer page;
+
+    private List<String> itemImages;
     
-    @JsonIgnore
-    private Integer size;
-    
-    public ItemDTO(Long id, String title, String category, Integer price,
-        String content, String img, Integer amount, Integer star) {
-		 this.id = id;
-		 this.title = title;
-		 this.category = category;
-		 this.price = price;
-		 this.content = content;
-		 this.img = img;
-		 this.amount = amount;
-		 this.star = star;
-	}
-    
+    private List<OptionDTO> options;
+
+    private List<List<QNADTO>> qnas;
+
+    private List<List<CommentDTO>> comments;
+
+    private List<CartDTO> carts;
+
     public static ItemDTO toDTO(Items entity) {
-    	Integer amount = 0;
-    	for(Options option : entity.getOptions()) {
-    		amount += option.getAmount();
-    	}
         return ItemDTO.builder()
-                .id(entity.getId())
-                .title(entity.getTitle())
-                .category(entity.getCategory().toString())
-                .price(entity.getPrice())
-                .content(entity.getContent())
-                .img(entity.getImg())
-                .amount(amount)
-                .options(entity.getOptions())
-                .star(entity.getFavorites().size())
-                .qnas(entity.getQnas())
-                .comments(entity.getComments())
-                .options(entity.getOptions())
-                .store(entity.getStore())
-                .build();
+            .id(entity.getId())
+            .title(entity.getTitle())
+            .category(entity.getCategory())
+            .price(entity.getPrice())
+            .content(entity.getContent())
+            .sellerName(entity.getStore().getSeller().getUser().getName())
+            .storePk(entity.getStore().getId())
+            .storeName(entity.getStore().getStoreName())
+            .star(entity.getFavorites().size())
+            .itemImages(
+                entity.getItemImages().stream().map(url ->{
+                    try{
+                        return url.getImgUrl();
+                    }catch (Exception e){
+                        return null;
+                    }
+                }).collect(Collectors.toList())
+            ).options(DTOMapper.convertList(entity.getOptions().stream(), OptionDTO::toDTO))
+            .qnas(entity.getOptions().stream().map(option -> {
+                try{
+                    return DTOMapper.convertList(option.getQnas().stream(), QNADTO::toDTO);
+                }catch (Exception e){
+                    return null;
+                }
+            }).collect(Collectors.toList()))
+            .comments(entity.getOptions().stream().map(option -> {
+                try{
+                    return DTOMapper.convertList(option.getComments().stream(), CommentDTO::toDTO);
+                }catch (Exception e){
+                    return null;
+                }
+            }).collect(Collectors.toList()))
+            .build();
     }
-
-
 }

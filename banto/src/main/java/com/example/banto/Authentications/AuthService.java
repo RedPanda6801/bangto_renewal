@@ -2,15 +2,11 @@ package com.example.banto.Authentications;
 
 import com.example.banto.Exceptions.AuthenticationException;
 import com.example.banto.Exceptions.ForbiddenException;
-import com.example.banto.Exceptions.UserNotFoundException;
 import com.example.banto.Users.UserRepository;
 import com.example.banto.Users.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,13 +32,27 @@ public class AuthService {
         // 2. 관리자 권한 확인
         if(authentication.getAuthorities().stream().noneMatch(auth ->
             auth.getAuthority().equals("ROLE_ADMIN") ||
-            auth.getAuthority().equals("ADMIN"))
-        ){
+            auth.getAuthority().equals("ADMIN")
+        )){
             throw new ForbiddenException("관리자 권한이 없습니다.");
         }
     }
 
-    public void authSeller(Authentication authentication) {
+    public void authToSeller(Authentication authentication) {
+        // 1. 로그인 정보 확인
+        if(authentication == null || !authentication.isAuthenticated()){
+            throw new AuthenticationException("로그인이 필요합니다.");
+        }
+        // 2. 판매자 권한 확인
+        if(authentication.getAuthorities().stream().noneMatch(auth ->
+            auth.getAuthority().equals("ROLE_SELLER") ||
+            auth.getAuthority().equals("SELLER")
+        )){
+            throw new ForbiddenException("판매자 권한이 없습니다.");
+        }
+    }
+
+    public void authToSellerOrAdmin(Authentication authentication) {
         // 1. 로그인 정보 확인
         if(authentication == null || !authentication.isAuthenticated()){
             throw new AuthenticationException("로그인이 필요합니다.");
@@ -50,9 +60,12 @@ public class AuthService {
         // 2. 관리자 권한 확인
         if(authentication.getAuthorities().stream().noneMatch(auth ->
             auth.getAuthority().equals("ROLE_SELLER") ||
-                auth.getAuthority().equals("SELLER"))
-        ){
-            throw new ForbiddenException("관리자 권한이 없습니다.");
+            auth.getAuthority().equals("SELLER") ||
+            auth.getAuthority().equals("ROLE_ADMIN") ||
+            auth.getAuthority().equals("ADMIN")
+        )){
+            throw new ForbiddenException("판매자 권한이 없습니다.");
         }
     }
+
 }

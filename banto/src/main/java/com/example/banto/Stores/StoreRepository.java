@@ -1,8 +1,10 @@
-package com.example.banto.Repositorys;
+package com.example.banto.Stores;
 
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,9 +15,12 @@ import com.example.banto.Stores.Stores;
 
 
 @Repository
-public interface StoreRepository extends JpaRepository<Stores, Integer> {
-	@Query("SELECT new com.example.banto.Stores.StoreDTO(s.id, s.name, s.busiNum) FROM Stores s WHERE s.seller.id = :sellerId")
-	public List<StoreDTO> findAllBySellerId(@Param("sellerId") Integer sellerId);
+public interface StoreRepository extends JpaRepository<Stores, Long> {
+	public Optional<Stores> findByBusiNum(String busiNum);
+
+	public Page<Stores> findAllBySellerId(Long sellerId, Pageable pageable);
+
+	public Optional<Stores> findByStoreName(String storeName);
 
 	@Query("SELECT s FROM Stores s WHERE s.seller.id = :sellerId")
 	public List<Stores> findAllBySellerIdToEntity(@Param("sellerId") Integer sellerId);

@@ -26,9 +26,8 @@ import com.example.banto.Users.Users;
 import com.example.banto.Repositorys.CartRepository;
 import com.example.banto.Repositorys.OptionRepository;
 import com.example.banto.Repositorys.PayRepository;
-import com.example.banto.Repositorys.SellerRepository;
-import com.example.banto.Repositorys.StoreRepository;
-import com.example.banto.Repositorys.WalletRepository;
+import com.example.banto.Sellers.SellerRepository;
+import com.example.banto.Stores.StoreRepository;
 
 import jakarta.transaction.Transactional;
 

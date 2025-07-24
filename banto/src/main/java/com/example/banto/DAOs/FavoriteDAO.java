@@ -20,7 +20,7 @@ import com.example.banto.Entitys.Favorites;
 import com.example.banto.Items.Items;
 import com.example.banto.Users.Users;
 import com.example.banto.Repositorys.FavoriteRepository;
-import com.example.banto.Repositorys.ItemRepository;
+import com.example.banto.Items.ItemRepository;
 
 import jakarta.transaction.Transactional;
 

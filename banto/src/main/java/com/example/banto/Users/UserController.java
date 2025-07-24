@@ -1,5 +1,6 @@
 package com.example.banto.Users;
 
+import com.example.banto.DTOs.PageDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Delete;
@@ -23,85 +24,49 @@ public class UserController {
 	@PostMapping("/sign")
 	public ResponseEntity<?> sign(@Valid @RequestBody UserDTO dto) {
 		userService.sign(dto);
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.ok().body("회원가입 성공");
 	}
 	// 로그인 기능
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginDTO dto) {
 		String token = userService.login(dto);
-		return ResponseEntity.ok().body(
-			new ResponseDTO(token, null)
-		);
+		return ResponseEntity.ok().body(token);
 	}
 	// 내정보 조회
 	@GetMapping("/user")
 	public ResponseEntity<?> getUser() {
 		UserDTO user = userService.getUser();
-		return ResponseEntity.ok().body(
-			new ResponseDTO(user, null)
-		);
+		return ResponseEntity.ok().body(user);
 	}
 	// 유저 단일 조회(관리자)
-	@GetMapping("/user/admin/{userId}")
+	@GetMapping("/admin/user/{userId}")
 	public ResponseEntity<?> getUserForAdmin(@PathVariable("userId") Long userId) {
 		UserDTO user = userService.getUserForAdmin(userId);
-		return ResponseEntity.ok().body(
-			new ResponseDTO(user, null)
-		);
+		return ResponseEntity.ok().body(user);
 	}
 	// 유저 전체 정보 조회(관리자)
-	@GetMapping("/user/admin/get-list/{page}")
+	@GetMapping("/admin/user/get-list/{page}")
 	public ResponseEntity<?> getUserListForAdmin(@PathVariable("page") Integer page) {
-			ArrayList<UserDTO> user = userService.getUserListForAdmin(page);
-			return ResponseEntity.ok().body(
-				new ResponseDTO(user, null));
+		PageDTO useList = userService.getUserListForAdmin(page);
+		return ResponseEntity.ok().body(useList);
 	}
 	// 내정보 수정
 	@PutMapping("/user")
 	public ResponseEntity<?> updateUser(@RequestBody UserDTO dto) {
 		userService.update(dto);
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.ok().body("회원수정 완료");
 	}
 	// 회원탈퇴
-	@Delete("/user")
+	@DeleteMapping("/user")
 	public ResponseEntity<?> deleteUser() {
-		try {
-			userService.delete();
-			return ResponseEntity.ok().body("회원탈퇴 완료");
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
-
-	// 유저 단일 수정(관리자)
-	@PostMapping("/manager/user/modify/{userId}")
-	public ResponseEntity modifyUserManager(@PathVariable("userId") Integer userId, @RequestBody UserDTO dto) {
-		try {
-			userService.modifyUserForRoot(userId, dto);
-			return ResponseEntity.ok().body(null);
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
-	
-	// 유저 단일 삭제(관리자)
-	@PostMapping("/manager/user/delete/{userId}")
-	public ResponseEntity deleteUser(@PathVariable("userId") Integer userId) {
-		try {
-			userService.deleteUser(userId);
-			return ResponseEntity.ok().body("회원 추방 완료");
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+		userService.delete();
+		return ResponseEntity.ok().body("회원탈퇴 완료");
 	}
 	// SNS 회원가입 여부 확인
-	@GetMapping("/user/get-sns-signed/{email}")
-	public ResponseEntity isSnsSigned(@PathVariable("email") String email) {
-		try {
-			ResponseDTO isSnsSigned = userService.isSnsSigned(email);
-			return ResponseEntity.ok().body(isSnsSigned);
-		}catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	// 상황에 따라 삭제 확인
+	@GetMapping("/user/sns-sign/{email}")
+	public ResponseEntity<?> isSnsSigned(@PathVariable("email") String email) {
+		boolean isSnsChecked = userService.isSnsSigned(email);
+		return ResponseEntity.ok().body(isSnsChecked);
 	}
 }

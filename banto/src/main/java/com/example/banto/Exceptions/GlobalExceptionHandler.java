@@ -14,6 +14,13 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<?> handleDuplicateResource(DuplicateResourceException e) {
+        return ResponseEntity.badRequest().body(
+            new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
+        );
+    }
+
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<?> handleInvalidLoginUser(InvalidCredentialsException e) {
         return ResponseEntity.badRequest().body(
@@ -28,10 +35,24 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> handleUserNotFound(UserNotFoundException e) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleUserNotFound(ResourceNotFoundException e) {
         return ResponseEntity.badRequest().body(
                 new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
+        );
+    }
+
+    @ExceptionHandler(AlreadyProcessedException.class)
+    public ResponseEntity<?> handleAlreadyProcessed(AlreadyProcessedException e) {
+        return ResponseEntity.badRequest().body(
+            new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
+        );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> illegalArgError(IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(
+            new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
         );
     }
 
@@ -46,6 +67,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleForbidden(ForbiddenException e) {
         return ResponseEntity.badRequest().body(
             new ErrorResponse(HttpStatus.FORBIDDEN, e.getMessage())
+        );
+    }
+
+    @ExceptionHandler(InternalServerException.class)
+    public ResponseEntity<?> handle500Error(InternalServerException e) {
+        return ResponseEntity.internalServerError().body(
+            new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage())
+        );
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<?> handleDataAccessError(DataAccessException e) {
+        return ResponseEntity.internalServerError().body(
+            new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage())
         );
     }
 }

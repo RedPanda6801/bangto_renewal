@@ -1,4 +1,4 @@
-package com.example.banto.Repositorys;
+package com.example.banto.Items;
 
 
 import org.springframework.data.domain.Page;
@@ -10,10 +10,10 @@ import org.springframework.data.repository.query.Param;
 import com.example.banto.Enums.CategoryType;
 import com.example.banto.Items.Items;
 
-public interface ItemRepository extends JpaRepository<Items, Integer> {
+public interface ItemRepository extends JpaRepository<Items, Long> {
 	
 	@Query("SELECT i FROM Items i WHERE i.store.id = :storeId")
-	Page<Items> getItemsByStoreId(@Param("storeId") Integer storeId, Pageable pageable); 
+	Page<Items> getItemsByStoreId(@Param("storeId") Long storeId, Pageable pageable);
 	
 	@Query("SELECT i FROM Items i WHERE i.title LIKE %:title%")
 	Page<Items> getItemsByTitle(@Param("title") String title, Pageable pageable);

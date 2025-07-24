@@ -41,12 +41,13 @@ public class SellerAuths {
     @JoinColumn(name="USER_PK")
     private Users user;
     
-    /*public static SellerAuths toEntity(ApplyDTO dto) {
+    public static SellerAuths toEntity(SellerAuthDTO dto, Users user) {
         return SellerAuths.builder()
-                .id(dto.getId())
-                .auth(dto.getAuth())
-                .applyDate(dto.getApplyDate())
-                .signDate(dto.getSignDate())
-                .build();
-    }*/
+            .auth(ApplyType.Processing)
+            .applyDate(LocalDateTime.now())
+            .storeName(dto.getStoreName())
+            .busiNum(dto.getBusiNum())
+            .user(user)
+            .build();
+    }
 }

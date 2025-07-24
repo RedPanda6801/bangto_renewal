@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +23,21 @@ public class OptionDTO {
     private Long itemPk;
     
     private Integer amount;
+
+    private List<String> optionImages;
+
+    public static OptionDTO toDTO(Options entity){
+        return OptionDTO.builder()
+            .addPrice(entity.getAddPrice())
+            .optionInfo(entity.getOptionInfo())
+            .amount(entity.getAmount())
+            .optionImages(entity.getOptionImages().stream().map(img -> {
+                try{
+                    return img.getImgUrl();
+                }catch (Exception e){
+                    return null;
+                }
+            }).collect(Collectors.toList()))
+            .build();
+    }
 }

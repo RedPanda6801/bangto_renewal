@@ -19,8 +19,8 @@ import org.springframework.data.domain.Sort;
 
 import com.example.banto.Items.Items;
 import com.example.banto.Stores.Stores;
-import com.example.banto.Repositorys.ItemRepository;
-import com.example.banto.Repositorys.StoreRepository;
+import com.example.banto.Items.ItemRepository;
+import com.example.banto.Stores.StoreRepository;
 
 import jakarta.transaction.Transactional;
 

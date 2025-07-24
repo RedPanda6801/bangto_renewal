@@ -35,8 +35,9 @@ public class Options {
     @Column(name="AMOUNT", nullable=false)
     private Integer amount;
 
-    @Column(name="IMG")
-    private String img;
+    @JsonIgnore
+    @OneToMany(mappedBy="option", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OptionImages> optionImages;
 
     @JsonIgnore
     @ManyToOne

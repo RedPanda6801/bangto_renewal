@@ -19,6 +19,9 @@ public class Sellers {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name="IS_BANNED", nullable = false)
+	private Boolean isBanned;
+
 	//@ToString.Exclude  // 필드에 적용
 	@OneToMany(mappedBy="seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Stores> stores;
@@ -30,10 +33,10 @@ public class Sellers {
 	@JoinColumn(name = "USER_PK")
 	private Users user;
 
-	public static Sellers toEntity(SellerDTO dto) {
+	public static Sellers toEntity(Users user) {
 		return Sellers.builder()
-				.id(dto.getId())
-				.user(dto.getUser())
-				.build();
+			.user(user)
+			.isBanned(false)
+			.build();
 	}
 }

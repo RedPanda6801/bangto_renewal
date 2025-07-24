@@ -22,10 +22,10 @@ import com.example.banto.Qnas.QNAs;
 import com.example.banto.Sellers.Sellers;
 import com.example.banto.Stores.Stores;
 import com.example.banto.Users.Users;
-import com.example.banto.Repositorys.ItemRepository;
+import com.example.banto.Items.ItemRepository;
 import com.example.banto.Repositorys.QNARepository;
-import com.example.banto.Repositorys.SellerRepository;
-import com.example.banto.Repositorys.StoreRepository;
+import com.example.banto.Sellers.SellerRepository;
+import com.example.banto.Stores.StoreRepository;
 
 import jakarta.transaction.Transactional;
 

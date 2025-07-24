@@ -1,32 +1,21 @@
 package com.example.banto.Users;
 
 import com.example.banto.Authentications.AuthService;
-import com.example.banto.Comments.Comments;
-import com.example.banto.Exceptions.DuplicateUserException;
-import com.example.banto.Exceptions.InvalidCredentialsException;
-import com.example.banto.Exceptions.TokenCreationException;
-import com.example.banto.Exceptions.UserNotFoundException;
+import com.example.banto.DTOs.PageDTO;
+import com.example.banto.Exceptions.*;
 import com.example.banto.JWTs.JwtUtil;
-import com.example.banto.Qnas.QNAs;
-import com.example.banto.SoldItems.SoldItems;
+import com.example.banto.Utils.DTOMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.banto.DTOs.ResponseDTO;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +27,7 @@ public class UserService {
 	private final BCryptPasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
 
+	@Transactional
 	public void sign(UserDTO dto){
 		// 1. User 존재 여부 확인 -> 존재 시 예외 처리
 		userRepository.findByEmail(dto.getEmail()).ifPresent(e -> {
@@ -90,13 +80,13 @@ public class UserService {
 		authService.authToAdmin(SecurityContextHolder.getContext().getAuthentication());
 		// 2. 유저 정보 반환
 		Users user = userRepository.findById(userId).orElseThrow(()->
-			new UserNotFoundException("조회할 유저가 없습니다.")
+			new ResourceNotFoundException("조회할 유저가 없습니다.")
 		);
 		// 3. pw 제거 후 DTO 반환
 		return UserDTO.toDTO(user);
 	}
 
-	public ArrayList<UserDTO> getUserListForAdmin(Integer page) {
+	public PageDTO getUserListForAdmin(Integer page) {
 		// 1. 어드민 권한 확인
 		authService.authToAdmin(SecurityContextHolder.getContext().getAuthentication());
 		// 2. 페이지 객체 생성
@@ -105,19 +95,11 @@ public class UserService {
 		Page<Users> userPages = userRepository.findAll(pageable);
 		// 4. 비어있으면 빈 객체 반환
 		if(userPages.isEmpty()) {
-			return new ArrayList<>();
+			return new PageDTO(new ArrayList<>(), userPages.getTotalPages());
 		}
-		else {
-			// 5. 값이 있으면 DTO에 매핑 후 반환
-			return userPages.stream().map(user -> {
-				try{
-					return UserDTO.toDTO(user);
-				}catch(Exception e){
-					// 변환 실패에 대한 예외 로그 처리 필요
-					return null;
-				}
-			}).collect(Collectors.toCollection(ArrayList::new));
-		}
+		// 5. 값이 있으면 DTO에 매핑 후 반환
+		List<UserDTO> userList = DTOMapper.convertList(userPages.stream(), UserDTO::toDTO);
+		return new PageDTO(userList, userPages.getTotalPages());
 	}
 
 	@Transactional
@@ -139,7 +121,8 @@ public class UserService {
 	}
 
 	@Transactional
-	public void delete() throws Exception {
+	public void delete(){
+		/*
 		// 1. 유저 본인 확인
 		Users user = authService.authToUser(SecurityContextHolder.getContext().getAuthentication());
 		// 2. User 관련 DB 처리
@@ -151,16 +134,7 @@ public class UserService {
 
 		// 2-4. QNA의 유저 null 처리
 
-		// 3. Seller 관련 DB 처리
-		// 3-1. SellerAuth 조회
-
-		// 3-2. SellerAuth 삭제
-
-		// 3-3. Seller 여부 확인
-
-		// 3-4. Seller -> Stores -> Items 조회
-
-		// 3-5. 역순으로 삭제 및 연관 관계 삭제
+		// 3. Seller 관련 DB 처리 -> sellerService.delete로 일괄 처리
 
 		// 4. 유저 삭제
 
@@ -184,30 +158,16 @@ public class UserService {
 			qnaRepository.save(qna);
 		}
 
-		// 추후에 다른 항목들도 삭제해야 될 수도 있음.
 		userRepository.delete(user);
+		 */
 	}
 
-	public void modifyUserForRoot(Integer userId, UserDTO dto) throws Exception {
-		try {
-				userDAO.modifyUserForRoot(userId, dto);
-		}catch(Exception e) {
-			throw e;
-		}
-	}
-
-	public void deleteUser(Integer userId) throws Exception {
-		try {
-			userDAO.deleteUser(userId);
-		}catch(Exception e) {
-			throw e;
-		}
-	}
-	public ResponseDTO isSnsSigned(String email) throws Exception {
-		try {
-			return userDAO.isSnsSigned(email);
-		}catch(Exception e) {
-			throw e;
+	public Boolean isSnsSigned(String email){
+		try{
+			return userRepository.findByEmail(email)
+				.map(Users::getSnsAuth).orElse(false);
+		}catch (Exception e){
+			throw new InternalServerException("서버에 문제가 발생했습니다. 다시 시도해주세요.");
 		}
 	}
 }

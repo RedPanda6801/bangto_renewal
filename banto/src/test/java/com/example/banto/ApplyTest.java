@@ -3,7 +3,7 @@ package com.example.banto;
 import java.util.List;
 
 import com.example.banto.SellerAuths.SellerAuths;
-import com.example.banto.Repositorys.ApplyRepository;
+import com.example.banto.SellerAuths.SellerAuthRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import jakarta.transaction.Transactional;
 @SpringBootTest
 class ApplyTest {
     @Autowired
-    ApplyRepository applyRepository;
+    SellerAuthRepository applyRepository;
 
 
     @AfterEach

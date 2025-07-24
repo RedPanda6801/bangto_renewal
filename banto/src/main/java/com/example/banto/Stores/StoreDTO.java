@@ -1,11 +1,14 @@
 package com.example.banto.Stores;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.example.banto.Items.ItemDTO;
 import com.example.banto.Items.Items;
 import com.example.banto.Sellers.Sellers;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,35 +22,29 @@ public class StoreDTO {
    
     private Long id;
 
-    private String name;
+    private String storeName;
 
     private String sellerName;
-
+    @NotNull
     private String busiNum;
-    
+    @NotNull
     private Sellers seller;
 
-    @JsonIgnore
-    private List<Items> items;
-
-    public StoreDTO(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-    public StoreDTO(Long id, String name, String busiNum) {
-        this.id = id;
-        this.name = name;
-        this.busiNum = busiNum;
-    }
+    private List<ItemDTO> items;
 
     public static StoreDTO toDTO(Stores entity) {
         return StoreDTO.builder()
                 .id(entity.getId())
-                .name(entity.getName())
+                .storeName(entity.getStoreName())
                 .sellerName(entity.getSeller().getUser().getName())
                 .busiNum(entity.getBusiNum())
-                .seller(null)
-                .items(entity.getItems())
+                .items(entity.getItems().stream().map(item -> {
+                    try{
+                        return ItemDTO.toDTO(item);
+                    }catch(Exception e){
+                        return null;
+                    }
+                }).collect(Collectors.toList()))
                 .build();
     }
 }

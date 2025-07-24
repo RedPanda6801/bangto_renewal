@@ -14,28 +14,29 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SellerDTO {
 
-	    private Long id;
-	    
-	    private String email;
-	    
-	    private String name;
-	    
-	    private String addr;
-	    
-	    private String phone;
-	    
-	    private Long userPk;
-	    
-	    private Users user;
-	    
-	    public static SellerDTO toDTO(Sellers entity) {
-	        return SellerDTO.builder()
-	                .id(entity.getId())
-	                .email(entity.getUser().getEmail())
-	                .name(entity.getUser().getName())
-	                .addr(entity.getUser().getAddr())
-	                .phone(entity.getUser().getPhone())
-	                .userPk(entity.getUser().getId())
-	                .build();
-	    }
+	private Long sellerPk;
+
+	private String email;
+
+	private String name;
+
+	private String addr;
+
+	private String phone;
+
+	private Boolean isBanned;
+
+	private Long userPk;
+
+	public static SellerDTO toDTO(Sellers entity) {
+		return SellerDTO.builder()
+			.sellerPk(entity.getId())
+			.email(entity.getUser().getEmail())
+			.name(entity.getUser().getName())
+			.addr(entity.getUser().getAddr())
+			.phone(entity.getUser().getPhone())
+			.userPk(entity.getUser().getId())
+			.isBanned(entity.getIsBanned())
+			.build();
+	}
 }
