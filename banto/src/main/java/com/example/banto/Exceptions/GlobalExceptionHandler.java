@@ -70,6 +70,13 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(ImageHandleException.class)
+    public ResponseEntity<?> handleImageUploading(ImageHandleException e) {
+        return ResponseEntity.internalServerError().body(
+            new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage())
+        );
+    }
+
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<?> handle500Error(InternalServerException e) {
         return ResponseEntity.internalServerError().body(

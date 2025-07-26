@@ -19,6 +19,7 @@ import com.example.banto.Stores.Stores;
 import com.example.banto.Utils.DTOMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,14 +33,15 @@ public class ItemDTO {
 
     private Long id;
 
+    @NotNull
     private String title;
-
+    @NotNull
 	private CategoryType category;
-
+    @NotNull
     private Integer price;
     
     private String content;
-
+    @NotNull
     private Long storePk;
 
     private String storeName;
@@ -48,12 +50,8 @@ public class ItemDTO {
 
     private Integer star;
 
-    // 정렬 기준 필드
-    private Integer priceSort;
-    private Integer page;
-
     private List<String> itemImages;
-    
+
     private List<OptionDTO> options;
 
     private List<List<QNADTO>> qnas;

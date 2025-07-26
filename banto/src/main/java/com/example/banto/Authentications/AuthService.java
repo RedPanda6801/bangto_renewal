@@ -14,21 +14,23 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
-    public Users authToUser(Authentication authentication) {
-        // 로그인 정보 확인
+    private void checkLogin(Authentication authentication){
         if(authentication == null || !authentication.isAuthenticated()){
             throw new AuthenticationException("로그인이 필요합니다.");
         }
-        // 권한 확인
+    }
+
+    public Users authToUser(Authentication authentication) {
+        // 1. 로그인 정보 확인
+        checkLogin(authentication);
+        // 2. 유저 조회 및 반환
         return userRepository.findById(Long.parseLong(authentication.getName()))
                 .orElseThrow(()-> new ForbiddenException("권한이 없습니다.(유저)"));
     }
 
     public void authToAdmin(Authentication authentication) {
         // 1. 로그인 정보 확인
-        if(authentication == null || !authentication.isAuthenticated()){
-            throw new AuthenticationException("로그인이 필요합니다.");
-        }
+        checkLogin(authentication);
         // 2. 관리자 권한 확인
         if(authentication.getAuthorities().stream().noneMatch(auth ->
             auth.getAuthority().equals("ROLE_ADMIN") ||
@@ -40,9 +42,7 @@ public class AuthService {
 
     public void authToSeller(Authentication authentication) {
         // 1. 로그인 정보 확인
-        if(authentication == null || !authentication.isAuthenticated()){
-            throw new AuthenticationException("로그인이 필요합니다.");
-        }
+        checkLogin(authentication);
         // 2. 판매자 권한 확인
         if(authentication.getAuthorities().stream().noneMatch(auth ->
             auth.getAuthority().equals("ROLE_SELLER") ||
@@ -54,9 +54,7 @@ public class AuthService {
 
     public void authToSellerOrAdmin(Authentication authentication) {
         // 1. 로그인 정보 확인
-        if(authentication == null || !authentication.isAuthenticated()){
-            throw new AuthenticationException("로그인이 필요합니다.");
-        }
+        checkLogin(authentication);
         // 2. 관리자 권한 확인
         if(authentication.getAuthorities().stream().noneMatch(auth ->
             auth.getAuthority().equals("ROLE_SELLER") ||

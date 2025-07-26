@@ -2,15 +2,18 @@ package com.example.banto.Items;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.example.banto.Authentications.AuthService;
 import com.example.banto.Configs.EnvConfig;
 import com.example.banto.DTOs.PageDTO;
 import com.example.banto.Enums.CategoryType;
 import com.example.banto.Exceptions.ForbiddenException;
+import com.example.banto.Exceptions.ImageHandleException;
 import com.example.banto.Exceptions.InternalServerException;
 import com.example.banto.Exceptions.ResourceNotFoundException;
 import com.example.banto.Options.Options;
+import com.example.banto.Sellers.Sellers;
 import com.example.banto.Stores.StoreRepository;
 import com.example.banto.Stores.Stores;
 import com.example.banto.Utils.DTOMapper;
@@ -32,6 +35,7 @@ public class ItemService {
 
 	private final ItemRepository itemRepository;
 	private final StoreRepository storeRepository;
+	private final ItemImagesRepository itemImagesRepository;
 	private final AuthService authService;
 	private final EnvConfig envConfig;
 
@@ -73,170 +77,7 @@ public class ItemService {
 		return new PageDTO(recommendItemList, recommendItemPages.getTotalPages());
 	}
 
-	public PageDTO getItemListByStore(Long storeId, Integer page) {
-		// 1. 매장 조회
-		Stores store = storeRepository.findById(storeId)
-			.orElseThrow(() -> new ResourceNotFoundException("매장 정보가 없습니다."));
-		// 2. 매장 내의 물건을 20개씩 끊어서 합치기
-		List<Items> items = store.getItems();
-		int maxPage = Math.max(page * 21, items.size());
-		List<Items> filteredItems = store.getItems().subList(page*20, maxPage);
-		// 3. Entity -> DTO
-		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toDTO);
-		// 4. PageDTO로 감싸서 반환
-		return new PageDTO(itemList, maxPage / 20);
-	}
-
-	public PageDTO getItemListByStoreName(String storeName, Integer page) {
-		// 1. 매장 조회
-		Stores store = storeRepository.findByStoreName(storeName)
-			.orElseThrow(() -> new ResourceNotFoundException("매장 정보가 없습니다."));
-		// 2. 매장 내의 물건을 20개씩 끊어서 합치기
-		List<Items> items = store.getItems();
-		int maxPage = Math.max(page * 21, items.size());
-		List<Items> filteredItems = store.getItems().subList(page*20, maxPage);
-		// 3. Entity -> DTO
-		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toDTO);
-		// 4. PageDTO로 감싸서 반환
-		return new PageDTO(itemList, maxPage / 20);
-	}
-
-	@Transactional
-	public void addItem(ItemDTO itemDTO, List<MultipartFile> files) throws Exception{
-		try {
-			// 인증 유효 확인
-			int sellerId = authDAO.authSeller(SecurityContextHolder.getContext().getAuthentication());
-			if(authDAO.authSeller(SecurityContextHolder.getContext().getAuthentication()) == -1){
-				throw new Exception("권한 오류");
-			}
-			Optional<Stores> store = storeRepository.findById(itemDTO.getStorePk());
-			if(store.isEmpty()) {
-				throw new Exception("매장 조회 오류");
-			}else if(!store.get().getSeller().getUser().getId().equals(sellerId)){
-				throw new Exception("본인 매장이 아님");
-			}else {
-				String savePath = envConfig.get("FRONTEND_UPLOAD_ADDRESS");
-				String img = "";
-				if(files != null) {
-					for(MultipartFile file : files) {
-						String originalfilename = file.getOriginalFilename();
-						String before = originalfilename.substring(0, originalfilename.indexOf("."));
-						String ext = originalfilename.substring(originalfilename.indexOf("."));
-						String newfilename = before + "(" + UUID.randomUUID() + ")" + ext;
-						file.transferTo(new java.io.File(savePath + newfilename));
-						img += newfilename + "/";
-					}
-					img = img.substring(0, img.length() - 1);
-				}
-
-				Items item = Items.toEntity(itemDTO);
-				item.setImg(img);
-				item.setStore(store.get());
-				Items newItem = itemRepository.save(item);
-
-				for(Options option : itemDTO.getOptions()) {
-					option.setAmount(option.getAmount());
-					option.setOptionInfo(option.getOptionInfo());
-					option.setAddPrice(option.getAddPrice());
-					option.setItem(newItem); // 연관 관계 설정
-					optionRepository.save(option); // 개별적으로 저장
-				}
-			}
-		}catch(Exception e) {
-			throw e;
-		}
-	}
-	/*
-	@Transactional
-	public void modifyItem(ItemDTO dto, List<MultipartFile> files) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// 1. 팬매자 인증 확인
-		authService.authToSeller(authentication);
-		// 2. 수정할 물건 조회
-		Items item = itemRepository.findById(dto.getId())
-			.orElseThrow(() -> new ResourceNotFoundException("수정된 물건이 없습니다."));
-		// 3. 수정 권한 확인
-		if(!Objects.equals(Long.parseLong(
-			authentication.getName()), item.getStore().getSeller().getUser().getId()
-		)){
-			throw new ForbiddenException("수정할 권한이 없습니다.");
-		}
-		// 4. 이미지 저장 위치 및 저장 확인
-		String savePath = envConfig.get("FRONTEND_UPLOAD_ADDRESS");
-		StringBuilder img = new StringBuilder();
-
-		if(files != null) {
-			File saveDir = new File(savePath);
-			if (!saveDir.exists()) {
-				throw new InternalServerException("파일 저장 디렉토리 오류");
-			}
-			File[] existingFiles = saveDir.listFiles();  // 기존 파일 목록 가져오기
-			for(MultipartFile file : files) {
-				String originalfilename = file.getOriginalFilename();
-				if(originalfilename == null) break;
-				// 파일이 이미 존재하는지 확인
-				boolean exists = false;
-				if (existingFiles != null) {
-					for (File existingFile : existingFiles) {
-						if (existingFile.getName().equals(originalfilename)) {
-							img.append(originalfilename).append("/");
-							exists = true;
-							break;
-						}
-					}
-				}
-				if(exists) continue;
-				String before = originalfilename.substring(0, originalfilename.indexOf("."));
-				String ext = originalfilename.substring(originalfilename.indexOf("."));
-				String newfilename = before + "(" + UUID.randomUUID() + ")" + ext;
-				file.transferTo(new File(savePath + newfilename));
-				img.append(newfilename).append("/");
-			}
-			img = new StringBuilder(img.substring(0, img.length() - 1));
-		}
-		// 수정 로직
-		item.setTitle((dto.getTitle() != null && !dto.getTitle().equals("")) ?
-			dto.getTitle() : item.getTitle());
-		item.setCategory((dto.getCategory() != null && !dto.getCategory().equals("")) ?
-			CategoryType.valueOf(dto.getCategory()) : item.getCategory());
-		System.out.println("hello");
-		item.setImg((!img.isEmpty()) ? img.toString() : item.getImg());
-		item.setContent((dto.getContent() != null && !dto.getContent().equals("")) ?
-			dto.getContent() : item.getContent());
-		itemRepository.save(item);
-	}
-	 */
-
-	@Transactional
-	public void deleteItem(ItemDTO dto) throws Exception{
-		try {
-			int sellerId = authDAO.authSeller(SecurityContextHolder.getContext().getAuthentication());
-			if(sellerId == -1 && !authDAO.authRoot(SecurityContextHolder.getContext().getAuthentication())){
-				throw new Exception("판매자 권한 오류");
-			}
-			Optional<Stores> store = storeRepository.findById(dto.getStorePk());
-			if(store.isEmpty()) {
-				throw new Exception("매장 조회 오류");
-			}else if(!store.get().getSeller().getUser().getId().equals(sellerId)){
-				throw new Exception("판매자 정보 불일치");
-			}else {
-				Optional<Items> itemOpt = itemRepository.findById(dto.getId());
-				if(itemOpt.isEmpty()){
-					throw new Exception("아이템 조회 오류");
-				}
-				List<GroupItemPays> payments = groupBuyPayRepository.findByItemId(dto.getId());
-				for(GroupItemPays payment : payments){
-					payment.setItem(null);
-					groupBuyPayRepository.save(payment);
-				}
-				itemRepository.delete(itemOpt.get());
-			}
-		}catch(Exception e) {
-			throw e;
-		}
-	}
-
-	public PageDTO getFilteredItemList(ItemDTO dto) {
+	public PageDTO getFilteredItemList(SearchDTO dto) {
 		/*
 		List<Sort.Order> sortOrder = new ArrayList<>();
 		if(dto.getPriceSort() != null) {
@@ -267,6 +108,165 @@ public class ItemService {
 		 */
 		return new PageDTO(null, null);
 	}
+
+	@Transactional
+	public void addItem(ItemDTO itemDTO, List<MultipartFile> files) {
+		// 1. 판매자 권한 확인
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		authService.authToSeller(authentication);
+		// 2. 추가하려는 store 확인
+		Stores store = storeRepository.findById(itemDTO.getStorePk())
+			.orElseThrow(() -> new ResourceNotFoundException("매장 정보가 없습니다."));
+		// 3. 판매자와 매장의 권한 확인
+		if(!Objects.equals(
+			Long.parseLong(authentication.getName()), store.getSeller().getUser().getId()
+		)){
+			throw new ForbiddenException("매장에 대한 권한이 없습니다.");
+		}
+		// 4. item 엔티티 먼저 저장
+		// 4-1. entity -> dto
+		Items item = Items.toEntity(itemDTO);
+		// 4-2. 연관관계 설정
+		item.setStore(store);
+		// 4-3. DB 반영 (영속성 반영)
+		itemRepository.save(item);
+		// 5. 이미지 파일 저장
+		String savePath = envConfig.get("FRONTEND_UPLOAD_ADDRESS");
+		// 5-1. 파일이 비어있지 않으면 저장 준비
+		if(!files.isEmpty()) {
+			try{
+				// 5-2. 파일 순회
+				for(MultipartFile file : files) {
+					// 5-3. 파일 이름 가져오기
+					String originFileName = file.getOriginalFilename();
+					// 파일 이름과 확장자를 분리하기 위한 index
+					int dotInd = originFileName.indexOf(".");
+					// 파일 이름
+					String before = originFileName.substring(0, dotInd);
+					// 확장자
+					String ext = originFileName.substring(dotInd);
+					// 5-4. 파일 이름에 UUID(식별자) 추가
+					String newFileName = before + "(" + UUID.randomUUID() + ")" + ext;
+					// 5-5. 정해둔 경로에 파일 저장
+					file.transferTo(new java.io.File(savePath + newFileName));
+					// 5-6. 이미지 DB에 반영
+					ItemImages image = new ItemImages();
+					image.setImgUrl(newFileName);
+					image.setItem(item);
+					itemImagesRepository.save(image);
+				}
+			}catch (Exception e){
+				// 5-7. 파일 저장 실패 시 예외 처리
+				throw new ImageHandleException("이미지 저장에 오류가 발생했습니다.");
+			}
+		}
+	}
+
+	@Transactional
+	public void updateItem(ItemDTO dto, List<MultipartFile> files) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		// 1. 팬매자 인증 확인
+		authService.authToSeller(authentication);
+		// 2. 수정할 물건 조회
+		Items item = itemRepository.findById(dto.getId())
+			.orElseThrow(() -> new ResourceNotFoundException("수정된 물건이 없습니다."));
+		// 3. 수정 권한 확인
+		if(!Objects.equals(Long.parseLong(
+			authentication.getName()), item.getStore().getSeller().getUser().getId()
+		)){
+			throw new ForbiddenException("수정할 권한이 없습니다.");
+		}
+		// 4. 수정 로직
+		item.setTitle((dto.getTitle() != null && !dto.getTitle().trim().isEmpty()) ?
+			dto.getTitle() : item.getTitle());
+		item.setContent((dto.getContent() != null && !dto.getContent().trim().isEmpty()) ?
+			dto.getContent() : item.getContent());
+		item.setCategory(dto.getCategory() != null && CategoryType.contains(dto.getCategory()) ?
+			dto.getCategory() : item.getCategory());
+		// 5. 이미지 저장 위치 및 저장
+		String savePath = envConfig.get("FRONTEND_UPLOAD_ADDRESS");
+		// 5-1. 저장되어있는 ItemImage 리스트 가져오기
+		List<ItemImages> currentImg = itemImagesRepository.findAllByItemId(item.getId());
+		List<String> currentImageNames = currentImg.stream().map(img ->{
+			try{
+				return img.getImgUrl();
+			}catch(Exception e){
+				return null;
+			}
+		}).toList();
+		// 5-2. 받은 이미지가 있는지 확인
+		if(!files.isEmpty()) {
+			List<String> fileNameList = new ArrayList<>();
+			// 5-3. 받은 이미지에 대한 추가 처리
+			for (MultipartFile file : files) {
+				String originalFileName = file.getOriginalFilename();
+				fileNameList.add(originalFileName);
+				// 5-3-1. 기존 파일에 있는 파일이면 저장 및 삭제 X
+				if (!currentImageNames.isEmpty() && currentImageNames.contains(originalFileName)) {
+					continue;
+				}
+				// 5-3-2. 추가되는 파일에 대한 작업
+				try {
+					int dotInd = originalFileName.indexOf(".");
+					String before = originalFileName.substring(0, dotInd);
+					String ext = originalFileName.substring(dotInd);
+					String newFileName = before + "(" + UUID.randomUUID() + ")" + ext;
+					file.transferTo(new java.io.File(savePath + newFileName));
+					// 5-3-3. 이미지 DB에 반영
+					ItemImages image = new ItemImages();
+					image.setImgUrl(newFileName);
+					image.setItem(item);
+					itemImagesRepository.save(image);
+				} catch (Exception e) {
+					// 5-3-4. 파일 저장 실패 시 예외 처리
+					throw new ImageHandleException("이미지 저장에 오류가 발생했습니다.");
+				}
+			}
+			// 6. 제거된 이미지에 대한 삭제 처리
+			for(ItemImages beforeImage : currentImg){
+				// 6-1. 중복된 파일 여부 확인
+				if(!fileNameList.contains(beforeImage.getImgUrl())){
+					beforeImage.setItem(null);
+					itemImagesRepository.delete(beforeImage);
+				}
+			}
+		}else{
+			// 7. 비어있으므로 전부 삭제 처리
+			for(ItemImages image : currentImg){
+				image.setItem(null);
+				itemImagesRepository.delete(image);
+			}
+		}
+	}
+
+	@Transactional
+	public void deleteItem(ItemDTO dto){
+		/*
+		int sellerId = authDAO.authSeller(SecurityContextHolder.getContext().getAuthentication());
+		if(sellerId == -1 && !authDAO.authRoot(SecurityContextHolder.getContext().getAuthentication())){
+			throw new Exception("판매자 권한 오류");
+		}
+		Optional<Stores> store = storeRepository.findById(dto.getStorePk());
+		if(store.isEmpty()) {
+			throw new Exception("매장 조회 오류");
+		}else if(!store.get().getSeller().getUser().getId().equals(sellerId)){
+			throw new Exception("판매자 정보 불일치");
+		}else {
+			Optional<Items> itemOpt = itemRepository.findById(dto.getId());
+			if(itemOpt.isEmpty()){
+				throw new Exception("아이템 조회 오류");
+			}
+			List<GroupItemPays> payments = groupBuyPayRepository.findByItemId(dto.getId());
+			for(GroupItemPays payment : payments){
+				payment.setItem(null);
+				groupBuyPayRepository.save(payment);
+			}
+			itemRepository.delete(itemOpt.get());
+		}
+		 */
+	}
+
+
 		/*
 		public ResponseDTO getItemListByTitle(String title, Integer page) throws Exception{
 		try {
@@ -306,4 +306,32 @@ public class ItemService {
 		}
 	}
 	 */
+
+	public PageDTO getItemListByStore(Long storeId, Integer page) {
+		// 1. 매장 조회
+		Stores store = storeRepository.findById(storeId)
+			.orElseThrow(() -> new ResourceNotFoundException("매장 정보가 없습니다."));
+		// 2. 매장 내의 물건을 20개씩 끊어서 합치기
+		List<Items> items = store.getItems();
+		int maxPage = Math.max(page * 21, items.size());
+		List<Items> filteredItems = store.getItems().subList(page*20, maxPage);
+		// 3. Entity -> DTO
+		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toDTO);
+		// 4. PageDTO로 감싸서 반환
+		return new PageDTO(itemList, maxPage / 20);
+	}
+
+	public PageDTO getItemListByStoreName(String storeName, Integer page) {
+		// 1. 매장 조회
+		Stores store = storeRepository.findByStoreName(storeName)
+			.orElseThrow(() -> new ResourceNotFoundException("매장 정보가 없습니다."));
+		// 2. 매장 내의 물건을 20개씩 끊어서 합치기
+		List<Items> items = store.getItems();
+		int maxPage = Math.max(page * 21, items.size());
+		List<Items> filteredItems = store.getItems().subList(page*20, maxPage);
+		// 3. Entity -> DTO
+		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toDTO);
+		// 4. PageDTO로 감싸서 반환
+		return new PageDTO(itemList, maxPage / 20);
+	}
 }

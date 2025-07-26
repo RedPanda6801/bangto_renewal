@@ -1,5 +1,11 @@
 package com.example.banto.Enums;
 
+import jdk.jfr.Category;
+import lombok.Getter;
+
+import java.util.Arrays;
+
+@Getter
 public enum CategoryType {
 	Clothing("의류"),
 	Cosmetics("화장품"),
@@ -17,8 +23,13 @@ public enum CategoryType {
 	CategoryType(String value){
 		this.value = value;
 	}
-	
-	public String getValue(){
-        return value;
-    }
+
+	public static boolean contains(CategoryType category){
+		for(CategoryType categoryType : CategoryType.values()){
+			if(!categoryType.equals(category)){
+				return false;
+			}
+		}
+		return true;
+	}
 }
