@@ -4,6 +4,8 @@ import com.example.banto.Exceptions.AuthenticationException;
 import com.example.banto.Exceptions.ForbiddenException;
 import com.example.banto.Users.UserRepository;
 import com.example.banto.Users.Users;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -66,4 +68,13 @@ public class AuthService {
         }
     }
 
+    public String authToRedis(Authentication authentication, HttpServletRequest request){
+        if (authentication != null && authentication.isAuthenticated()
+            && !"anonymousUser".equals(authentication.getPrincipal())) {
+            return authentication.getName(); // 유저의 고유 식별자 (일반적으로 username)
+        } else {
+            HttpSession session = request.getSession(); // 없으면 새로 생성
+            return session.getId(); // 비회원용 세션 ID
+        }
+    }
 }

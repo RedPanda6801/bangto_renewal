@@ -1,22 +1,19 @@
 package com.example.banto.Items;
 
-import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.banto.Authentications.AuthService;
 import com.example.banto.Configs.EnvConfig;
-import com.example.banto.DTOs.PageDTO;
+
 import com.example.banto.Enums.CategoryType;
 import com.example.banto.Exceptions.ForbiddenException;
-import com.example.banto.Exceptions.ImageHandleException;
-import com.example.banto.Exceptions.InternalServerException;
 import com.example.banto.Exceptions.ResourceNotFoundException;
-import com.example.banto.Options.Options;
-import com.example.banto.Sellers.Sellers;
 import com.example.banto.Stores.StoreRepository;
 import com.example.banto.Stores.Stores;
 import com.example.banto.Utils.DTOMapper;
+import com.example.banto.Utils.ImageHandler;
+import com.example.banto.Utils.PageDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,8 +23,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.example.banto.DTOs.ResponseDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -130,34 +125,17 @@ public class ItemService {
 		item.setStore(store);
 		// 4-3. DB 반영 (영속성 반영)
 		itemRepository.save(item);
-		// 5. 이미지 파일 저장
-		String savePath = envConfig.get("FRONTEND_UPLOAD_ADDRESS");
-		// 5-1. 파일이 비어있지 않으면 저장 준비
+		// 5. 파일 저장 로직
 		if(!files.isEmpty()) {
-			try{
-				// 5-2. 파일 순회
-				for(MultipartFile file : files) {
-					// 5-3. 파일 이름 가져오기
-					String originFileName = file.getOriginalFilename();
-					// 파일 이름과 확장자를 분리하기 위한 index
-					int dotInd = originFileName.indexOf(".");
-					// 파일 이름
-					String before = originFileName.substring(0, dotInd);
-					// 확장자
-					String ext = originFileName.substring(dotInd);
-					// 5-4. 파일 이름에 UUID(식별자) 추가
-					String newFileName = before + "(" + UUID.randomUUID() + ")" + ext;
-					// 5-5. 정해둔 경로에 파일 저장
-					file.transferTo(new java.io.File(savePath + newFileName));
-					// 5-6. 이미지 DB에 반영
-					ItemImages image = new ItemImages();
-					image.setImgUrl(newFileName);
-					image.setItem(item);
-					itemImagesRepository.save(image);
-				}
-			}catch (Exception e){
-				// 5-7. 파일 저장 실패 시 예외 처리
-				throw new ImageHandleException("이미지 저장에 오류가 발생했습니다.");
+			// 5-1. 파일 순회
+			for(MultipartFile file : files) {
+				// 5-2. 파일 생성 및 생성 파일 이름 반환
+				String newFileName = ImageHandler.imageMapper(file, envConfig.get("FRONTEND_UPLOAD_ADDRESS"));
+				// 5-3. 이미지 DB에 반영
+				ItemImages image = new ItemImages();
+				image.setImgUrl(newFileName);
+				image.setItem(item);
+				itemImagesRepository.save(image);
 			}
 		}
 	}
@@ -183,49 +161,34 @@ public class ItemService {
 			dto.getContent() : item.getContent());
 		item.setCategory(dto.getCategory() != null && CategoryType.contains(dto.getCategory()) ?
 			dto.getCategory() : item.getCategory());
-		// 5. 이미지 저장 위치 및 저장
-		String savePath = envConfig.get("FRONTEND_UPLOAD_ADDRESS");
 		// 5-1. 저장되어있는 ItemImage 리스트 가져오기
 		List<ItemImages> currentImg = itemImagesRepository.findAllByItemId(item.getId());
-		List<String> currentImageNames = currentImg.stream().map(img ->{
+		ArrayList<String> currentImageNames = currentImg.stream().map(img ->{
 			try{
 				return img.getImgUrl();
 			}catch(Exception e){
 				return null;
 			}
-		}).toList();
+		}).collect(Collectors.toCollection(ArrayList::new));
 		// 5-2. 받은 이미지가 있는지 확인
 		if(!files.isEmpty()) {
-			List<String> fileNameList = new ArrayList<>();
 			// 5-3. 받은 이미지에 대한 추가 처리
 			for (MultipartFile file : files) {
-				String originalFileName = file.getOriginalFilename();
-				fileNameList.add(originalFileName);
-				// 5-3-1. 기존 파일에 있는 파일이면 저장 및 삭제 X
-				if (!currentImageNames.isEmpty() && currentImageNames.contains(originalFileName)) {
+				// 5-3-1. 중복 제거 후 넘기기
+				if (currentImageNames.contains(file.getOriginalFilename())) {
+					currentImageNames.remove(file.getOriginalFilename());
 					continue;
 				}
 				// 5-3-2. 추가되는 파일에 대한 작업
-				try {
-					int dotInd = originalFileName.indexOf(".");
-					String before = originalFileName.substring(0, dotInd);
-					String ext = originalFileName.substring(dotInd);
-					String newFileName = before + "(" + UUID.randomUUID() + ")" + ext;
-					file.transferTo(new java.io.File(savePath + newFileName));
-					// 5-3-3. 이미지 DB에 반영
-					ItemImages image = new ItemImages();
-					image.setImgUrl(newFileName);
-					image.setItem(item);
-					itemImagesRepository.save(image);
-				} catch (Exception e) {
-					// 5-3-4. 파일 저장 실패 시 예외 처리
-					throw new ImageHandleException("이미지 저장에 오류가 발생했습니다.");
-				}
+				String newFileName = ImageHandler.imageMapper(file, envConfig.get("FRONTEND_UPLOAD_ADDRESS"));
+				// 5-3-3. 이미지 DB에 반영
+				ItemImages image = ItemImages.toEntity(item, newFileName);
+				itemImagesRepository.save(image);
 			}
 			// 6. 제거된 이미지에 대한 삭제 처리
 			for(ItemImages beforeImage : currentImg){
-				// 6-1. 중복된 파일 여부 확인
-				if(!fileNameList.contains(beforeImage.getImgUrl())){
+				// 6-1. 제거될 파일 이름에서 확인
+				if(currentImageNames.contains(beforeImage.getImgUrl())){
 					beforeImage.setItem(null);
 					itemImagesRepository.delete(beforeImage);
 				}

@@ -2,7 +2,8 @@ package com.example.banto.Items;
 
 import java.util.List;
 
-import com.example.banto.DTOs.PageDTO;
+
+import com.example.banto.Utils.PageDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -10,9 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.example.banto.Options.OptionDTO;
-import com.example.banto.DTOs.ResponseDTO;
 
 @Controller
 @RequiredArgsConstructor

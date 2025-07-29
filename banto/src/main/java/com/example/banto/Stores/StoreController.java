@@ -1,16 +1,11 @@
 package com.example.banto.Stores;
 
-import com.example.banto.DTOs.PageDTO;
+import com.example.banto.Utils.PageDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.banto.DTOs.ResponseDTO;
-import com.example.banto.Stores.StoreDTO;
-import com.example.banto.Stores.StoreService;
 
 @Controller
 @RequiredArgsConstructor

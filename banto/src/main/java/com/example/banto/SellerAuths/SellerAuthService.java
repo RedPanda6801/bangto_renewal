@@ -1,7 +1,7 @@
 package com.example.banto.SellerAuths;
 
 import com.example.banto.Authentications.AuthService;
-import com.example.banto.DTOs.PageDTO;
+import com.example.banto.Utils.PageDTO;
 import com.example.banto.Enums.ApplyType;
 import com.example.banto.Exceptions.*;
 import com.example.banto.Exceptions.IllegalArgumentException;
@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

@@ -56,6 +56,20 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(DeletionConstraintException.class)
+    public ResponseEntity<?> deleteConstraintError(DeletionConstraintException e) {
+        return ResponseEntity.badRequest().body(
+            new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
+        );
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> validationError(ValidationException e) {
+        return ResponseEntity.badRequest().body(
+            new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
+        );
+    }
+
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<?> handleAuthentication(AuthenticationException e) {
         return ResponseEntity.badRequest().body(

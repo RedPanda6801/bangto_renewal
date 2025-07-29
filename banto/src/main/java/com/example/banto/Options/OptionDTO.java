@@ -1,5 +1,6 @@
 package com.example.banto.Options;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,13 +16,13 @@ import java.util.stream.Collectors;
 public class OptionDTO {
 
     private Long id;
-    
+    @NotNull
     private Integer addPrice;
-    
+    @NotNull
     private String optionInfo;
- 
+    @NotNull
     private Long itemPk;
-    
+    @NotNull
     private Integer amount;
 
     private List<String> optionImages;

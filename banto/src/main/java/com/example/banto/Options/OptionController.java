@@ -1,11 +1,15 @@
 package com.example.banto.Options;
 
+import com.example.banto.Items.ItemDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -15,35 +19,24 @@ public class OptionController {
     private final OptionService optionService;
 
     // 옵션 추가
-    @PostMapping("/item/option/add")
-    public ResponseEntity<?> AddItemOption(@RequestBody OptionDTO optionDTO) throws Exception {
-        try {
-            System.out.println(optionDTO);
-            optionService.addItemOption(optionDTO);
-            return ResponseEntity.ok().body(null);
-        }catch(Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @PostMapping(path = "/option/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createOption(@Valid @RequestPart("dto") OptionDTO optionDTO
+        , @RequestPart(name = "files", required = false) List<MultipartFile> files) {
+        optionService.create(optionDTO, files);
+        return ResponseEntity.ok().body("옵션 삭제에 성공했습니다.");
     }
 
     // 옵션 수정
-    @PostMapping("/item/option/modify")
-    public ResponseEntity modifyItemOption(@RequestBody OptionDTO optionDTO) throws Exception {
-        try {
-            optionService.modifyItemOption(optionDTO);
-            return ResponseEntity.ok().body(null);
-        }catch(Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @PostMapping(path = "/option/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> update(@Valid @RequestPart("dto") OptionDTO optionDTO
+        , @RequestPart(name = "files", required = false) List<MultipartFile> files) {
+        optionService.update(optionDTO ,files);
+        return ResponseEntity.ok().body("옵션 수정에 성공했습니다.");
     }
     // 옵션 삭제
     @PostMapping("/item/option/delete")
-    public ResponseEntity deleteOption(@RequestBody OptionDTO optionDTO) throws Exception {
-        try {
-            optionService.deleteOption(optionDTO);
-            return ResponseEntity.ok().body(null);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<?> delete(@RequestBody OptionDTO optionDTO) {
+        optionService.delete(optionDTO);
+        return ResponseEntity.ok().body("옵션이 삭제되었습니다.");
     }
 }

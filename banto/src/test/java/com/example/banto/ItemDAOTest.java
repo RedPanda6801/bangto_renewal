@@ -3,9 +3,9 @@ package com.example.banto;
 import java.util.Optional;
 
 import com.example.banto.Options.Options;
-import com.example.banto.Qnas.QNAs;
-import com.example.banto.Repositorys.OptionRepository;
-import com.example.banto.Repositorys.QNARepository;
+import com.example.banto.Boards.Qnas.QNAs;
+import com.example.banto.Options.OptionRepository;
+import com.example.banto.Boards.Qnas.QNARepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

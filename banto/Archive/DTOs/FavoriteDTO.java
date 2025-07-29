@@ -1,0 +1,27 @@
+package com.example.banto.Archive.DTOs;
+
+import com.example.banto.Archive.Entitys.Favorites;
+import com.example.banto.Items.Items;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+//@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class FavoriteDTO {
+	private Integer id;
+	private Integer userPk;
+	private Items item;
+	
+	public static FavoriteDTO toDTO(Favorites entity) {
+		return FavoriteDTO.builder()
+				.id(entity.getId())
+				.item(entity.getItem())
+				.userPk(entity.getUser().getId())
+				.build();
+	}
+}

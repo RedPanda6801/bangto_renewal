@@ -1,12 +1,9 @@
 package com.example.banto.Items;
 import java.util.List;
 
-import com.example.banto.Carts.Carts;
-import com.example.banto.Entitys.*;
 import com.example.banto.Enums.CategoryType;
 import com.example.banto.Options.Options;
 import com.example.banto.Stores.Stores;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,24 +31,20 @@ public class Items {
     @Column(name="CONTENT", nullable=false)
     private String content;
 
-    @OneToMany(mappedBy="item", cascade = CascadeType.ALL)  // 추가: cascade 설정
+    @OneToMany(mappedBy="item", cascade = CascadeType.REMOVE, orphanRemoval = true)  // 추가: cascade 설정
     private List<ItemImages> itemImages;
 
     @ManyToOne
     @JoinColumn(name="STORE_PK")
     private Stores store;
 
-    @OneToMany(mappedBy="item", cascade = CascadeType.ALL)  // 추가: cascade 설정
+    @OneToMany(mappedBy="item", cascade = CascadeType.REMOVE, orphanRemoval = true)  // 추가: cascade 설정
     private List<Options> options;
 
-    @JsonIgnore
+/*    @JsonIgnore
     @OneToMany(mappedBy="item", cascade = CascadeType.ALL)  // 추가: cascade 설정
-    private List<Favorites> favorites;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy="item", cascade = CascadeType.ALL)  // 추가: cascade 설정
-    private List<Carts> carts;
-    
+    private List<Favorites> favorites;*/
+
     public static Items toEntity(ItemDTO dto) {
     	return Items.builder()
     			.title(dto.getTitle())

@@ -1,7 +1,7 @@
 package com.example.banto.Sellers;
 
 import com.example.banto.Authentications.AuthService;
-import com.example.banto.DTOs.PageDTO;
+import com.example.banto.Utils.PageDTO;
 import com.example.banto.Exceptions.ResourceNotFoundException;
 import com.example.banto.Utils.DTOMapper;
 import jakarta.transaction.Transactional;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

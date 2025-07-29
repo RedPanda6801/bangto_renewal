@@ -1,17 +1,12 @@
 package com.example.banto.Users;
 
-import com.example.banto.DTOs.PageDTO;
+
+import com.example.banto.Utils.PageDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Delete;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.banto.DTOs.ResponseDTO;
-
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/api")

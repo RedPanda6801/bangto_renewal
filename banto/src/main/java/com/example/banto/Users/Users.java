@@ -3,18 +3,15 @@ package com.example.banto.Users;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.example.banto.Carts.Carts;
-import com.example.banto.Comments.Comments;
-import com.example.banto.Entitys.*;
+import com.example.banto.Boards.Comments.Comments;
 import com.example.banto.Payments.Payments;
-import com.example.banto.Qnas.QNAs;
+import com.example.banto.Boards.Qnas.QNAs;
 import com.example.banto.SellerAuths.SellerAuths;
 import com.example.banto.Sellers.Sellers;
 import com.example.banto.SoldItems.SoldItems;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
@@ -65,15 +62,10 @@ public class Users {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SellerAuths> sellerAuths;
 
-    @JsonIgnore
+/*    @JsonIgnore
     //@ToString.Exclude
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Favorites> favorites;
-
-    @JsonIgnore
-   // @ToString.Exclude
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Carts> carts;
+    private List<Favorites> favorites;*/
 
     // 1 : N Relation (Cascade = null)
     @JsonIgnore

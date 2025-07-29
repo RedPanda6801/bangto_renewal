@@ -1,12 +1,12 @@
 package com.example.banto.Users;
 
 import com.example.banto.Authentications.AuthService;
-import com.example.banto.DTOs.PageDTO;
 import com.example.banto.Exceptions.*;
 import com.example.banto.JWTs.JwtUtil;
 import com.example.banto.Utils.DTOMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import com.example.banto.Utils.PageDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

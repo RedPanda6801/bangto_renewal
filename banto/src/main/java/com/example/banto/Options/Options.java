@@ -2,10 +2,9 @@ package com.example.banto.Options;
 
 import java.util.List;
 
-import com.example.banto.Carts.Carts;
-import com.example.banto.Comments.Comments;
+import com.example.banto.Boards.Comments.Comments;
 import com.example.banto.SoldItems.SoldItems;
-import com.example.banto.Qnas.QNAs;
+import com.example.banto.Boards.Qnas.QNAs;
 import com.example.banto.Items.Items;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,29 +35,33 @@ public class Options {
     private Integer amount;
 
     @JsonIgnore
-    @OneToMany(mappedBy="option", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OptionImages> optionImages;
-
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="ITEM_PK")
     private Items item;
- 
-    // 'option' 필드가 Carts 엔티티에 존재해야 함
-    @JsonIgnore
-    @OneToMany(mappedBy="option", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Carts> carts;
 
-    // 1:N Relation (cascade = remove)
     @JsonIgnore
-    @OneToMany(mappedBy="option", cascade = CascadeType.ALL)  // 추가: cascade 설정
+    @OneToMany(mappedBy="option", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<OptionImages> optionImages;
+
+    // option과 item이 사라져도 남도록 함
+    @JsonIgnore
+    @OneToMany(mappedBy="option")
     private List<QNAs> qnas;
 
     @JsonIgnore
-    @OneToMany(mappedBy="option", cascade = CascadeType.ALL)  // 추가: cascade 설정
+    @OneToMany(mappedBy="option")
     private List<Comments> comments;
 
     @JsonIgnore
-    @OneToMany(mappedBy="option", cascade = CascadeType.ALL)  // 추가: cascade 설정
+    @OneToMany(mappedBy="option")
     private List<SoldItems> soldItems;
+
+    public static Options toEntity(OptionDTO dto, Items item){
+        return Options.builder()
+            .item(item)
+            .addPrice(dto.getAddPrice())
+            .optionInfo(dto.getOptionInfo())
+            .amount(dto.getAmount())
+            .build();
+    }
 }

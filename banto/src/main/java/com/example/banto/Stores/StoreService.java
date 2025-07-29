@@ -1,7 +1,7 @@
 package com.example.banto.Stores;
 
 import com.example.banto.Authentications.AuthService;
-import com.example.banto.DTOs.PageDTO;
+import com.example.banto.Utils.PageDTO;
 import com.example.banto.Exceptions.ForbiddenException;
 import com.example.banto.Exceptions.ResourceNotFoundException;
 import com.example.banto.Sellers.SellerRepository;

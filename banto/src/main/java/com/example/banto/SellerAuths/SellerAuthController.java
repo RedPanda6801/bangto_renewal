@@ -1,20 +1,12 @@
 package com.example.banto.SellerAuths;
 
-import com.example.banto.DTOs.PageDTO;
-import com.example.banto.Stores.StoreDTO;
-import jakarta.transaction.Transactional;
+import com.example.banto.Utils.PageDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.banto.DTOs.ResponseDTO;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

@@ -1,23 +1,12 @@
 package com.example.banto.Items;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.banto.Carts.CartDTO;
-import com.example.banto.Carts.Carts;
-import com.example.banto.Comments.CommentDTO;
-import com.example.banto.Comments.Comments;
-import com.example.banto.DTOs.FavoriteDTO;
-import com.example.banto.Entitys.Favorites;
+import com.example.banto.Boards.Comments.CommentDTO;
 import com.example.banto.Enums.CategoryType;
 import com.example.banto.Options.OptionDTO;
-import com.example.banto.Options.Options;
-import com.example.banto.Qnas.QNADTO;
-import com.example.banto.Qnas.QNAs;
-import com.example.banto.Stores.StoreDTO;
-import com.example.banto.Stores.Stores;
+import com.example.banto.Boards.Qnas.QNADTO;
 import com.example.banto.Utils.DTOMapper;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -58,8 +47,6 @@ public class ItemDTO {
 
     private List<List<CommentDTO>> comments;
 
-    private List<CartDTO> carts;
-
     public static ItemDTO toDTO(Items entity) {
         return ItemDTO.builder()
             .id(entity.getId())
@@ -70,7 +57,7 @@ public class ItemDTO {
             .sellerName(entity.getStore().getSeller().getUser().getName())
             .storePk(entity.getStore().getId())
             .storeName(entity.getStore().getStoreName())
-            .star(entity.getFavorites().size())
+            //.star(entity.getFavorites().size())
             .itemImages(
                 entity.getItemImages().stream().map(url ->{
                     try{

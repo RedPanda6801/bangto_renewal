@@ -1,12 +1,10 @@
 package com.example.banto.Sellers;
 
-import com.example.banto.DTOs.PageDTO;
+import com.example.banto.Utils.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.banto.DTOs.ResponseDTO;
 
 @Controller
 @RequiredArgsConstructor

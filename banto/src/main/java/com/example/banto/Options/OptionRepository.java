@@ -1,0 +1,8 @@
+package com.example.banto.Options;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.banto.Options.Options;
+
+public interface OptionRepository extends JpaRepository<Options, Long> {
+}
