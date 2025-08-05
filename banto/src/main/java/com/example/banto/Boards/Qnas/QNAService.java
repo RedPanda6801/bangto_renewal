@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Service
+@Service("qnaService")
 @RequiredArgsConstructor
 public class QNAService implements BoardService<QNADTO, Long> {
 
@@ -43,7 +43,6 @@ public class QNAService implements BoardService<QNADTO, Long> {
 	private final QNAImagesRepository qnaImagesRepository;
 	private final SellerRepository sellerRepository;
 	private final StoreRepository storeRepository;
-	private final ItemRepository itemRepository;
 	private final AuthService authService;
 	private final EnvConfig envConfig;
 

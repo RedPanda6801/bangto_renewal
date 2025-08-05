@@ -3,7 +3,7 @@ package com.example.banto.Options;
 import java.util.List;
 
 import com.example.banto.Boards.Comments.Comments;
-import com.example.banto.SoldItems.SoldItems;
+import com.example.banto.Payments.SoldItems;
 import com.example.banto.Boards.Qnas.QNAs;
 import com.example.banto.Items.Items;
 import com.fasterxml.jackson.annotation.JsonIgnore;

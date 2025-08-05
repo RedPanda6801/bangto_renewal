@@ -1,9 +1,12 @@
 package com.example.banto.Users;
 
 import com.example.banto.Authentications.AuthService;
+import com.example.banto.Carts.CartService;
 import com.example.banto.Exceptions.*;
-import com.example.banto.JWTs.JwtUtil;
+import com.example.banto.JWTs.*;
 import com.example.banto.Utils.DTOMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import com.example.banto.Utils.PageDTO;
@@ -13,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CookieValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,9 @@ import java.util.List;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final RefreshTokenRepository refreshTokenRepository;
+	private final BlacklistTokenRepository blacklistTokenRepository;
+	private final CartService cartService;
 	private final AuthService authService;
 	private final BCryptPasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
@@ -48,7 +55,7 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public String login(LoginDTO dto) {
+	public String login(LoginDTO dto, String guestCartId, HttpServletResponse response) {
 		// 1. email 검색
 		Users user = userRepository.findByEmail(dto.getEmail()).orElseThrow(() ->   // 안티패턴 제거
 			new InvalidCredentialsException("아이디 또는 비밀번호가 일치하지 않습니다.")
@@ -59,9 +66,17 @@ public class UserService {
 		if(passwordEncoder.matches(dto.getPw(), user.getPw())){
 			throw new InvalidCredentialsException("아이디 또는 비밀번호가 일치하지 않습니다.");
 		}
-		// 4. 토큰 반환
+		// 4. 장바구니 병합
+		cartService.mergeCartOnLogin(guestCartId, user.getId(), response);
+		// 5. 권한 가져오기
+		String userRole = authService.getUserRole(user);
+		// 6. 토큰 생성 및 반환
 		try{
-			return jwtUtil.generateToken(user.getId());
+			// 6-1. 토큰 갱신
+			String newToken = jwtUtil.generateToken(user.getId(), userRole);
+			refreshTokenRepository.save(RefreshToken.toRedis(user.getId(), newToken));
+			// 6-2. 반환
+			return newToken;
 		}catch(Exception e){
 			throw new TokenCreationException("토큰 발급에 실패했습니다.");
 		}

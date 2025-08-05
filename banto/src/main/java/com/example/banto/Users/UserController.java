@@ -1,14 +1,17 @@
 package com.example.banto.Users;
 
 
+import com.example.banto.JWTs.RefreshToken;
 import com.example.banto.Utils.PageDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
@@ -23,8 +26,10 @@ public class UserController {
 	}
 	// 로그인 기능
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody LoginDTO dto) {
-		String token = userService.login(dto);
+	public ResponseEntity<?> login(@Valid @RequestBody LoginDTO dto,
+	   @CookieValue(value="cart_id", required=false) String guestCartId,
+	   HttpServletResponse response) {
+		String token = userService.login(dto, guestCartId, response);
 		return ResponseEntity.ok().body(token);
 	}
 	// 내정보 조회

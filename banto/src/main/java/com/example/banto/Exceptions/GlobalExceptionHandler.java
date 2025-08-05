@@ -1,8 +1,19 @@
 package com.example.banto.Exceptions;
 
+import com.example.banto.Boards.Comments.CommentController;
+import com.example.banto.Boards.Qnas.QNAController;
+import com.example.banto.Carts.CartController;
+import com.example.banto.Items.ItemController;
+import com.example.banto.Options.OptionController;
+import com.example.banto.Payments.PaymentController;
+import com.example.banto.SellerAuths.SellerAuthController;
+import com.example.banto.Sellers.SellerController;
+import com.example.banto.Stores.StoreController;
+import com.example.banto.Users.UserController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
@@ -65,6 +76,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<?> validationError(ValidationException e) {
+        return ResponseEntity.badRequest().body(
+            new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
+        );
+    }
+
+    @ExceptionHandler(FailedPaymentException.class)
+    public ResponseEntity<?> FailedPaymentError(FailedPaymentException e) {
         return ResponseEntity.badRequest().body(
             new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage())
         );

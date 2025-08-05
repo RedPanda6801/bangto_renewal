@@ -1,4 +1,4 @@
-package com.example.banto.SoldItems;
+package com.example.banto.Payments;
 
 import com.example.banto.Enums.DeliverType;
 import com.example.banto.Options.Options;
@@ -29,13 +29,9 @@ public class SoldItemDTO {
             .amount(entity.getAmount())
             .deliverInfo(entity.getDeliverInfo())
             .itemName(entity.getItemName())
-            .soldPrice( culcPricePerSoldItem(
-                    entity.getOption(), entity.getAmount()
-                )
-            ).optionInfo(entity.getOption().getOptionInfo())
+            .optionInfo(entity.getOption().getOptionInfo())
             .optionPk(entity.getOption().getId())
             .soldPrice(entity.getSoldPrice())
-            .userPk(entity.getUser().getId())
             .build();
     }
 

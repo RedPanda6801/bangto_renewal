@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ItemController {
@@ -34,11 +34,11 @@ public class ItemController {
 	}
 	
 	// 추천 상품 20개 조회
-	@GetMapping("/item/get-list/recommend")
+/*	@GetMapping("/item/get-list/recommend")
 	public ResponseEntity<?> getRecommendItemList() {
 		PageDTO itemList = itemService.getRecommendItemList();
 		return ResponseEntity.ok().body(itemList);
-	}
+	}*/
 
 	// 필터링 검색
 	// 물건 이름, 매장 이름, 카테고리, 가격 범위

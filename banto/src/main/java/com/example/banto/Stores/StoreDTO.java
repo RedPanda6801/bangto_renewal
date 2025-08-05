@@ -27,8 +27,6 @@ public class StoreDTO {
     private String sellerName;
     @NotNull
     private String busiNum;
-    @NotNull
-    private Sellers seller;
 
     private List<ItemDTO> items;
 

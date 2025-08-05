@@ -1,10 +1,14 @@
 package com.example.banto.Authentications;
 
+import com.example.banto.Configs.EnvConfig;
 import com.example.banto.Exceptions.AuthenticationException;
 import com.example.banto.Exceptions.ForbiddenException;
+import com.example.banto.Sellers.SellerRepository;
 import com.example.banto.Users.UserRepository;
 import com.example.banto.Users.Users;
+import com.example.banto.Utils.CookieHandler;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -15,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final SellerRepository sellerRepository;
+    private final EnvConfig envConfig;
 
     private void checkLogin(Authentication authentication){
         if(authentication == null || !authentication.isAuthenticated()){
@@ -68,13 +74,20 @@ public class AuthService {
         }
     }
 
-    public String authToRedis(Authentication authentication, HttpServletRequest request){
+    public String authToRedis(Authentication authentication, HttpServletRequest request, HttpServletResponse response){
         if (authentication != null && authentication.isAuthenticated()
             && !"anonymousUser".equals(authentication.getPrincipal())) {
             return authentication.getName(); // 유저의 고유 식별자 (일반적으로 username)
         } else {
-            HttpSession session = request.getSession(); // 없으면 새로 생성
-            return session.getId(); // 비회원용 세션 ID
+            return new CookieHandler().cookieHandler(request, response);
         }
+    }
+
+    public String getUserRole(Users user){
+        if(user.getEmail().equals(envConfig.get("ROOT_EMAIL"))){
+            return "ROLE_ADMIN";
+        }
+        return sellerRepository.findByUserId(user.getId())
+            .map(seller -> "ROLE_SELLER").orElse("ROLE_BUYER");
     }
 }

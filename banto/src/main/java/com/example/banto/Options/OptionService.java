@@ -9,7 +9,7 @@ import com.example.banto.Exceptions.ResourceNotFoundException;
 import com.example.banto.Items.Items;
 import com.example.banto.Items.ItemRepository;
 import com.example.banto.Boards.Qnas.QNAs;
-import com.example.banto.SoldItems.SoldItems;
+import com.example.banto.Payments.SoldItems;
 import com.example.banto.Utils.ImageHandler;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

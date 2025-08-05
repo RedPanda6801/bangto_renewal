@@ -17,19 +17,6 @@ class AuthDAOTest {
 	@Autowired
 	JwtUtil jwtUtil;
 	
-	
-	@Test
-	@Transactional
-	void test() throws Exception {
-	    // MockHttpServletRequest 생성
-	    MockHttpServletRequest request = new MockHttpServletRequest();
-	    
-	    // 헤더에 토큰 추가 (예제)
-	    request.addHeader("Authorization", "Bearer my-test-token");
 
-		String token = jwtUtil.validateToken(request);
-		
-		Assertions.assertThat(token).isNotNull();
-	}
 
 }

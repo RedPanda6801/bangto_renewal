@@ -8,7 +8,7 @@ import com.example.banto.Payments.Payments;
 import com.example.banto.Boards.Qnas.QNAs;
 import com.example.banto.SellerAuths.SellerAuths;
 import com.example.banto.Sellers.Sellers;
-import com.example.banto.SoldItems.SoldItems;
+import com.example.banto.Payments.SoldItems;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -66,12 +66,6 @@ public class Users {
     //@ToString.Exclude
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Favorites> favorites;*/
-
-    // 1 : N Relation (Cascade = null)
-    @JsonIgnore
-    //@ToString.Exclude
-    @OneToMany(mappedBy="user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    private List<SoldItems> soldItems;
 
     // 1 : N Relation (Cascade = null)
     @JsonIgnore

@@ -45,7 +45,7 @@ public class SellerAuthService {
 			throw new DuplicateResourceException("중복된 사업자 번호입니다.");
 		});
 		// 4. 신청 진행중(반려 또는 승인됨 X)인 신청서 확인
-		sellerAuthRepository.findProcessingByUserId(user.getId()).ifPresent( e -> {
+		sellerAuthRepository.findProcessingByUserId(user.getId(), ApplyType.Processing).ifPresent( e -> {
 			throw new DuplicateResourceException("이미 판매자 인증이 진행중입니다.");
 		});
 		// 5. 신청서 등록(DTO -> Entity)

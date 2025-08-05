@@ -57,7 +57,7 @@ public class ItemService {
 		return new PageDTO(itemList, itemPages.getTotalPages());
 	}
 	
-	public PageDTO getRecommendItemList() {
+	/*public PageDTO getRecommendItemList() {
 		// 1. 권한없이 검색하므로 페이징 객체 생성
 		Pageable pageable = PageRequest.of(0, 20);
 		// 2. Favorites 개수로 정렬해서 검색
@@ -70,7 +70,7 @@ public class ItemService {
 		List<ItemDTO> recommendItemList = DTOMapper.convertList(recommendItemPages.stream(), ItemDTO::toDTO);
 		// 5. Page 객체로 리턴
 		return new PageDTO(recommendItemList, recommendItemPages.getTotalPages());
-	}
+	}*/
 
 	public PageDTO getFilteredItemList(SearchDTO dto) {
 		/*

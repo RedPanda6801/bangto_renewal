@@ -1,6 +1,5 @@
 package com.example.banto.Payments;
 
-import com.example.banto.SoldItems.SoldItems;
 import com.example.banto.Users.Users;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -34,8 +33,13 @@ public class Payments {
     @JoinColumn(name="BUYER_PK")
     private Users user;
 
-    //@ToString.Exclude
-    @JsonIgnore
     @OneToMany(mappedBy="payment")
     private List<SoldItems> soldItems;
+
+    public static Payments toEntity(int totalPrice, Users user){
+        return Payments.builder()
+            .totalPrice(totalPrice)
+            .user(user)
+            .build();
+    }
 }

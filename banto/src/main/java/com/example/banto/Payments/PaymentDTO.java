@@ -1,29 +1,36 @@
 package com.example.banto.Payments;
 
-import com.example.banto.Enums.DeliverType;
-import com.example.banto.Users.Users;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.example.banto.Carts.CartDTO;
+import com.example.banto.Utils.DTOMapper;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class PaymentDTO {
 
-    private Long id;
+	@NotNull
+	private List<CartDTO> cartList;
 
-    private Integer totalPrice;
+	private List<SoldItemDTO> soldItemList;
 
-    private LocalDateTime payDate;
+	private Integer totalPrice;
 
-    private DeliverType deliverInfo;
+	private LocalDateTime payDate;
 
-    private Long userId;
+	public static PaymentDTO toDTO(Payments payment){
+		return PaymentDTO.builder()
+			.soldItemList(DTOMapper.convertList(payment.getSoldItems().stream(), SoldItemDTO::toDTO))
+			.payDate(payment.getPayDate())
+			.totalPrice(payment.getTotalPrice())
+			.build();
+	}
 }

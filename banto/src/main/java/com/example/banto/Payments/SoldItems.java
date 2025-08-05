@@ -1,11 +1,9 @@
-package com.example.banto.SoldItems;
-
-import java.time.LocalDateTime;
+package com.example.banto.Payments;
 
 import com.example.banto.Enums.DeliverType;
 import com.example.banto.Options.Options;
-import com.example.banto.Payments.Payments;
 import com.example.banto.Users.Users;
+import com.example.banto.Utils.PurchaseHandler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,6 +32,9 @@ public class SoldItems {
     @Enumerated(EnumType.STRING)  // Enum 값을 문자열로 저장
     private DeliverType deliverInfo;
 
+    @Column(name="BUYER_NAME")
+    private String userName;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="OPTION_PK")
@@ -41,11 +42,16 @@ public class SoldItems {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="BUYER_PK")
-    private Users user;
-
-    @JsonIgnore
-    @ManyToOne
     @JoinColumn(name="PAYMENT_PK")
     private Payments payment;
+
+    public static SoldItems toEntity(Users user, Options option, Integer amount){
+        return SoldItems.builder()
+            .userName(user.getName())
+            .deliverInfo(DeliverType.Preparing)
+            .soldPrice(PurchaseHandler.priceCulc(option, amount))
+            .itemName(option.getItem().getTitle())
+            .amount(amount)
+            .build();
+    }
 }

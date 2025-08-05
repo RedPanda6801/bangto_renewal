@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Controller
+@RestController
 //@RequiredArgsConstructor	-> Qualifier 사용 시 강한 객체 주입 필요
 @RequestMapping("/api")
 public class QNAController {
