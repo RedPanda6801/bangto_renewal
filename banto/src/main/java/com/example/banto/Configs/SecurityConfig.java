@@ -2,9 +2,9 @@ package com.example.banto.Configs;
 
 import java.util.List;
 
+import com.example.banto.Exceptions.ExceptionHandlingFilter;
 import com.example.banto.JWTs.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     private final JwtTokenFilter jwtTokenFilter;
+	private final ExceptionHandlingFilter exceptionHandlingFilter;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -113,38 +114,12 @@ public class SecurityConfig {
 			.requestMatchers(
 				new AntPathRequestMatcher("/api/user/get-info")
 			).hasAnyRole("ADMIN", "SELLER", "BUYER")
-			// 모두에게 허용된 URL
-			/*.requestMatchers(
-				new AntPathRequestMatcher("test/**"),
-				new AntPathRequestMatcher("/swagger-ui.html"),
-				new AntPathRequestMatcher("/swagger-ui/index.html"),
-				new AntPathRequestMatcher("/swagger/**"),
-				new AntPathRequestMatcher("/swagger-ui/**"),
-				new AntPathRequestMatcher("/v3/api-docs/**"),
-				new AntPathRequestMatcher("/swagger-resources/**"),
-				new AntPathRequestMatcher("/webjars/**"),
-				new AntPathRequestMatcher("/api/group-buy/current-event"),
-				new AntPathRequestMatcher("/api/group-buy/item/current-list"),
-				new AntPathRequestMatcher("/api/group-item/event/get-list"),
-				new AntPathRequestMatcher("/api/item/get-all-list/**"),
-				new AntPathRequestMatcher("/api/item/get-itemlist/**"),
-				new AntPathRequestMatcher("/api/item/get-detail/**"),
-				new AntPathRequestMatcher("/api/sign"),
-				new AntPathRequestMatcher("/api/login"),
-				new AntPathRequestMatcher("/api/user/get-sns-signed/**"),
-				new AntPathRequestMatcher("/api/comment/item/**"),
-				new AntPathRequestMatcher("/api/comment/get/**"),
-				new AntPathRequestMatcher("/api/item/get-by-title/**"),
-				new AntPathRequestMatcher("/api/item/get-by-store-name/**"),
-				new AntPathRequestMatcher("/api/item/get-by-category/**"),
-				new AntPathRequestMatcher("/api/item/get-filtered-list/**"),
-				new AntPathRequestMatcher("/api/item/get-recommend-list"),
-				new AntPathRequestMatcher("/api/qna/item/get-list/**")
-			).permitAll()*/
-			// 그 외 모든 요청 허용
+			// 로그인한 사용자에게 허용
 			.anyRequest().permitAll()
+			// 그 외 모든 요청 허용
 			)
 			.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore(exceptionHandlingFilter, JwtTokenFilter.class)
 			.csrf(AbstractHttpConfigurer::disable)
 			.build();
 	}

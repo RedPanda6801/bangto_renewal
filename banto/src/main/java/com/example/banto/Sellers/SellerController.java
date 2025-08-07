@@ -1,5 +1,6 @@
 package com.example.banto.Sellers;
 
+import com.example.banto.Users.LoginDTO;
 import com.example.banto.Utils.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,14 @@ import org.springframework.web.bind.annotation.*;
 public class SellerController {
 
 	private final SellerService sellerService;
-	
+
+	// 판매자 페이지 접근 시 판매자 로그인
+	@PostMapping("/seller/login")
+	public ResponseEntity<?> loginSeller(){
+		String sellerToken = sellerService.loginSeller();
+		return ResponseEntity.ok().body(sellerToken);
+	}
+
 	// 판매자 본인 조회
 	@GetMapping("/seller")
 	public ResponseEntity<?> getSeller() {

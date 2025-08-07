@@ -1,6 +1,6 @@
 package com.example.banto.Utils;
 
-import com.example.banto.Exceptions.ImageHandleException;
+import com.example.banto.Exceptions.CustomExceptions.ImageHandleException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;

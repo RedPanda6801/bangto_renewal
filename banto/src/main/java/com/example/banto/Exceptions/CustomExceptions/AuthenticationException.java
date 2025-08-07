@@ -1,4 +1,4 @@
-package com.example.banto.Exceptions;
+package com.example.banto.Exceptions.CustomExceptions;
 
 public class AuthenticationException extends RuntimeException {
     public AuthenticationException(String message){

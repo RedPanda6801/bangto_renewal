@@ -2,10 +2,12 @@ package com.example.banto.Users;
 
 import com.example.banto.Authentications.AuthService;
 import com.example.banto.Carts.CartService;
-import com.example.banto.Exceptions.*;
+import com.example.banto.Exceptions.CustomExceptions.DuplicateUserException;
+import com.example.banto.Exceptions.CustomExceptions.InternalServerException;
+import com.example.banto.Exceptions.CustomExceptions.InvalidCredentialsException;
+import com.example.banto.Exceptions.CustomExceptions.ResourceNotFoundException;
 import com.example.banto.JWTs.*;
 import com.example.banto.Utils.DTOMapper;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CookieValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class UserService {
 		userRepository.findByEmail(dto.getEmail()).ifPresent(e -> {
 			throw new DuplicateUserException("이미 존재하는 이메일입니다.");
 		});
-		if(!dto.getSnsAuth()) {
+		if(dto.getSnsAuth() == null || !dto.getSnsAuth()) {
 			// 2. SNS 여부 확인
 			// 2-1. SNS 계정이 아니면 pw 값 암호화 후 dto에 다시 set
 			dto.setSnsAuth(false);
@@ -58,28 +59,25 @@ public class UserService {
 	public String login(LoginDTO dto, String guestCartId, HttpServletResponse response) {
 		// 1. email 검색
 		Users user = userRepository.findByEmail(dto.getEmail()).orElseThrow(() ->   // 안티패턴 제거
-			new InvalidCredentialsException("아이디 또는 비밀번호가 일치하지 않습니다.")
+			new InvalidCredentialsException("이메일이 일치하지 않습니다.")
 		);
 		// 2. SNS 계정인지 확인
 		//if(user.getSnsAuth()){}
 		// 3. 비밀번호 일치 확인
-		if(passwordEncoder.matches(dto.getPw(), user.getPw())){
-			throw new InvalidCredentialsException("아이디 또는 비밀번호가 일치하지 않습니다.");
+		if(!passwordEncoder.matches(dto.getPw(), user.getPw())){
+			throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
 		}
 		// 4. 장바구니 병합
 		cartService.mergeCartOnLogin(guestCartId, user.getId(), response);
 		// 5. 권한 가져오기
 		String userRole = authService.getUserRole(user);
 		// 6. 토큰 생성 및 반환
-		try{
-			// 6-1. 토큰 갱신
-			String newToken = jwtUtil.generateToken(user.getId(), userRole);
-			refreshTokenRepository.save(RefreshToken.toRedis(user.getId(), newToken));
-			// 6-2. 반환
-			return newToken;
-		}catch(Exception e){
-			throw new TokenCreationException("토큰 발급에 실패했습니다.");
-		}
+
+		// 6-1. 토큰 갱신
+		String newToken = jwtUtil.generateToken(user.getId(), userRole);
+		refreshTokenRepository.save(RefreshToken.toRedis(user.getId(), newToken));
+		// 6-2. 반환
+		return newToken;
 	}
 
 	public UserDTO getUser() {

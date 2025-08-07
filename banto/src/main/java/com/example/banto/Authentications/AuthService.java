@@ -1,15 +1,14 @@
 package com.example.banto.Authentications;
 
 import com.example.banto.Configs.EnvConfig;
-import com.example.banto.Exceptions.AuthenticationException;
-import com.example.banto.Exceptions.ForbiddenException;
+import com.example.banto.Exceptions.CustomExceptions.AuthenticationException;
+import com.example.banto.Exceptions.CustomExceptions.ForbiddenException;
 import com.example.banto.Sellers.SellerRepository;
 import com.example.banto.Users.UserRepository;
 import com.example.banto.Users.Users;
 import com.example.banto.Utils.CookieHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

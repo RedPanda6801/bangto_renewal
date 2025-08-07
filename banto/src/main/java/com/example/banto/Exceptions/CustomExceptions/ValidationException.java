@@ -1,4 +1,4 @@
-package com.example.banto.Exceptions;
+package com.example.banto.Exceptions.CustomExceptions;
 
 public class ValidationException extends RuntimeException{
     public ValidationException(String message){

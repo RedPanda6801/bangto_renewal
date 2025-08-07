@@ -1,8 +1,13 @@
 package com.example.banto.Sellers;
 
 import com.example.banto.Authentications.AuthService;
+import com.example.banto.Exceptions.CustomExceptions.AuthenticationException;
+import com.example.banto.JWTs.JwtUtil;
+import com.example.banto.JWTs.RefreshToken;
+import com.example.banto.JWTs.RefreshTokenRepository;
+import com.example.banto.Users.Users;
 import com.example.banto.Utils.PageDTO;
-import com.example.banto.Exceptions.ResourceNotFoundException;
+import com.example.banto.Exceptions.CustomExceptions.ResourceNotFoundException;
 import com.example.banto.Utils.DTOMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +26,23 @@ import java.util.List;
 public class SellerService {
 
 	private final SellerRepository sellerRepository;
+	private final RefreshTokenRepository refreshTokenRepository;
 	private final AuthService authService;
+	private final JwtUtil jwtUtil;
+
+	public String loginSeller(){
+		// 1. User 인증 확인
+		Users user = authService.authToUser(SecurityContextHolder.getContext().getAuthentication());
+		// 2. 토큰 재생성
+		RefreshToken refreshToken = refreshTokenRepository.findById(user.getId())
+			.orElseThrow(() -> new AuthenticationException("만료된 토큰입니다. 재로그인하세요."));
+		String sellerToken = jwtUtil.generateToken(user.getId(), "ROLE_SELLER");
+		// 3. 리프레시 토큰에 반영
+		refreshToken.setJwtToken(sellerToken);
+		refreshTokenRepository.save(refreshToken);
+		// 4. 새 토큰 반환
+		return sellerToken;
+	}
 
 	public SellerDTO getSeller() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

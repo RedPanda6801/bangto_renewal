@@ -1,4 +1,4 @@
-package com.example.banto.Exceptions;
+package com.example.banto.Exceptions.CustomExceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message){

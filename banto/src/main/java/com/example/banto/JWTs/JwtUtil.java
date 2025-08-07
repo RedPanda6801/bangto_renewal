@@ -4,7 +4,8 @@ import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 
-import com.example.banto.Exceptions.AuthenticationException;
+import com.example.banto.Exceptions.CustomExceptions.AuthenticationException;
+import com.example.banto.Exceptions.CustomExceptions.TokenCreationException;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +28,18 @@ public class JwtUtil {
 	
 	//토큰 발급(이메일 파라미터 필요, 토큰 문자열 반환)
 	public String generateToken(Long userId, String userRole) {
-		String SECRET_KEY = envConfig.get("JWT_SECRET");
-		Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
-
-		return Jwts.builder()
-			.claims(Map.of("id", userId, "role", userRole))
-			.issuedAt(new Date())
-			.expiration(new Date(System.currentTimeMillis() + expireTime))
-			.signWith(key)
-			.compact();
+		try{
+			String SECRET_KEY = envConfig.get("JWT_SECRET");
+			Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+			return Jwts.builder()
+				.claims(Map.of("id", userId, "role", userRole))
+				.issuedAt(new Date())
+				.expiration(new Date(System.currentTimeMillis() + expireTime))
+				.signWith(key)
+				.compact();
+		}catch (Exception e){
+			throw  new TokenCreationException("토큰 발급에 실패했습니다.");
+		}
 	}
 	
 	//Http 요청에서 헤더에 있는 토큰 추출

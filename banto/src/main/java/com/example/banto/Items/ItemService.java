@@ -7,8 +7,8 @@ import com.example.banto.Authentications.AuthService;
 import com.example.banto.Configs.EnvConfig;
 
 import com.example.banto.Enums.CategoryType;
-import com.example.banto.Exceptions.ForbiddenException;
-import com.example.banto.Exceptions.ResourceNotFoundException;
+import com.example.banto.Exceptions.CustomExceptions.ForbiddenException;
+import com.example.banto.Exceptions.CustomExceptions.ResourceNotFoundException;
 import com.example.banto.Stores.StoreRepository;
 import com.example.banto.Stores.Stores;
 import com.example.banto.Utils.DTOMapper;

@@ -1,10 +1,10 @@
 package com.example.banto.SellerAuths;
 
 import com.example.banto.Authentications.AuthService;
+import com.example.banto.Exceptions.CustomExceptions.*;
+import com.example.banto.Exceptions.CustomExceptions.IllegalArgumentException;
 import com.example.banto.Utils.PageDTO;
 import com.example.banto.Enums.ApplyType;
-import com.example.banto.Exceptions.*;
-import com.example.banto.Exceptions.IllegalArgumentException;
 import com.example.banto.Stores.StoreRepository;
 import com.example.banto.Sellers.SellerRepository;
 import com.example.banto.Sellers.Sellers;

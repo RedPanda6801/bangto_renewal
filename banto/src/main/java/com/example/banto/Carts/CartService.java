@@ -1,7 +1,7 @@
 package com.example.banto.Carts;
 
 import com.example.banto.Authentications.AuthService;
-import com.example.banto.Exceptions.ResourceNotFoundException;
+import com.example.banto.Exceptions.CustomExceptions.ResourceNotFoundException;
 import com.example.banto.Options.OptionRepository;
 import com.example.banto.Options.Options;
 import jakarta.servlet.http.Cookie;
@@ -74,6 +74,7 @@ public class CartService {
 
 	public void mergeCartOnLogin(String cartId, Long userId, HttpServletResponse response) {
 		// 1. Redis에서 userId와 cartId로 카드 조회
+		if(cartId == null || cartId.isBlank()) return;
 		String userStrId = String.valueOf(userId);
 		Carts guestCart = cartRepository.findById(cartId).orElse(null);
 		Carts userCart = cartRepository.findById(userStrId).orElse(new Carts());

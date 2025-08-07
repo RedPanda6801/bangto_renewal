@@ -34,7 +34,7 @@ public class SellerAuthController {
 	@PutMapping("/admin/seller-auth/process")
 	public ResponseEntity<?> processApply(@Valid @RequestBody ProcessDTO dto) {
 		sellerAuthService.process(dto);
-		return ResponseEntity.ok().body("인증 신청서 처리 완료");
+		return ResponseEntity.ok().body("인증서 처리 완료");
 	}
 	
 	// 판매자 인증 신청서 목록 조회(20개씩, 관리자)
