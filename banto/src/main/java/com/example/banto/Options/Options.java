@@ -15,6 +15,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(
+    uniqueConstraints = {
+        @UniqueConstraint(name = "unique_item_info", columnNames = {"item_pk", "option_info"})
+    }
+)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

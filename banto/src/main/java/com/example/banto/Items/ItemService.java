@@ -3,6 +3,7 @@ package com.example.banto.Items;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.example.banto.Authentications.AuthService;
 import com.example.banto.Configs.EnvConfig;
 
@@ -31,6 +32,7 @@ public class ItemService {
 	private final ItemRepository itemRepository;
 	private final StoreRepository storeRepository;
 	private final ItemImagesRepository itemImagesRepository;
+	private final ItemElasticsearchRepository itemElasticsearchRepository;
 	private final AuthService authService;
 	private final EnvConfig envConfig;
 
@@ -52,11 +54,11 @@ public class ItemService {
 			return new PageDTO(new ArrayList<>(), itemPages.getTotalPages());
 		}
 		// 4. Entity -> DTO
-		List<ItemDTO> itemList = DTOMapper.convertList(itemPages.stream(), ItemDTO::toDTO);
+		List<ItemDTO> itemList = DTOMapper.convertList(itemPages.stream(), ItemDTO::toListDTO);
 		// 5. PageDTO로 감싸서 반환
 		return new PageDTO(itemList, itemPages.getTotalPages());
 	}
-	
+
 	/*public PageDTO getRecommendItemList() {
 		// 1. 권한없이 검색하므로 페이징 객체 생성
 		Pageable pageable = PageRequest.of(0, 20);
@@ -73,35 +75,24 @@ public class ItemService {
 	}*/
 
 	public PageDTO getFilteredItemList(SearchDTO dto) {
-		/*
-		List<Sort.Order> sortOrder = new ArrayList<>();
-		if(dto.getPriceSort() != null) {
-			if(dto.getPriceSort().equalsIgnoreCase("asc")) {
-				sortOrder.add(Sort.Order.asc("price"));
-			}
-			else if(dto.getPriceSort().equalsIgnoreCase("desc")) {
-				sortOrder.add(Sort.Order.desc("price"));
-			}
-			else {
-				throw new Exception("priceSort 입력 오류");
-			}
+		// 1. dto 비어있으면 빈 값 조회
+		if(dto == null){
+			return getItemList(0);
 		}
-		sortOrder.add(Sort.Order.asc("id"));
-		CategoryType category = null;
-		if(dto.getCategory() != null) {
-			category = dto.getCategory();
-		}
-		Pageable pageable = PageRequest.of(dto.getPage() - 1, dto.getSize(), Sort.by(sortOrder));
-		Page<Items> items = itemRepository.getFilterdItemList(dto.getTitle(), dto.getStoreName(), category, pageable);
-		List<ItemDTO> itemList = new ArrayList<ItemDTO>();
-		for(Items item : items) {
-			ItemDTO itemDTO = ItemDTO.toDTO(item);
-			itemList.add(itemDTO);
-		}
-		return new ResponseDTO(itemList, new PageDTO(items.getSize(), items.getTotalElements(), items.getTotalPages()));
-
-		 */
-		return new PageDTO(null, null);
+		// 2. elasticSearch에 조회
+		SearchResponse<ItemDocument> itemDocuments = itemElasticsearchRepository.searchItemListWithFilter(dto);
+		List<ItemDTO> itemList = itemDocuments.hits().hits().stream().map(hit -> {
+			try{
+				ItemDocument doc = hit.source();
+				if(doc == null){
+					return null;
+				}
+                return ItemDTO.toListDtoFromElastic(doc);
+			}catch (Exception e){
+				return null;
+			}
+		}).toList();
+		return new PageDTO(itemList, null);
 	}
 
 	@Transactional
@@ -125,12 +116,15 @@ public class ItemService {
 		item.setStore(store);
 		// 4-3. DB 반영 (영속성 반영)
 		itemRepository.save(item);
+		String mainImage = null;
 		// 5. 파일 저장 로직
 		if(!files.isEmpty()) {
 			// 5-1. 파일 순회
-			for(MultipartFile file : files) {
+			for(int i = 0; i < files.size(); i++) {
+				MultipartFile file = files.get(i);
 				// 5-2. 파일 생성 및 생성 파일 이름 반환
 				String newFileName = ImageHandler.imageMapper(file, envConfig.get("FRONTEND_UPLOAD_ADDRESS"));
+				if(i == 0) mainImage = newFileName;
 				// 5-3. 이미지 DB에 반영
 				ItemImages image = new ItemImages();
 				image.setImgUrl(newFileName);
@@ -138,6 +132,9 @@ public class ItemService {
 				itemImagesRepository.save(image);
 			}
 		}
+		// 6. elasticsearch 반영
+		ItemDocument document = ItemDocument.toDoc(item, mainImage);
+		itemElasticsearchRepository.save(document);
 	}
 
 	@Transactional
@@ -279,7 +276,7 @@ public class ItemService {
 		int maxPage = Math.max(page * 21, items.size());
 		List<Items> filteredItems = store.getItems().subList(page*20, maxPage);
 		// 3. Entity -> DTO
-		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toDTO);
+		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toListDTO);
 		// 4. PageDTO로 감싸서 반환
 		return new PageDTO(itemList, maxPage / 20);
 	}
@@ -293,7 +290,7 @@ public class ItemService {
 		int maxPage = Math.max(page * 21, items.size());
 		List<Items> filteredItems = store.getItems().subList(page*20, maxPage);
 		// 3. Entity -> DTO
-		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toDTO);
+		List<ItemDTO> itemList = DTOMapper.convertList(filteredItems.stream(), ItemDTO::toListDTO);
 		// 4. PageDTO로 감싸서 반환
 		return new PageDTO(itemList, maxPage / 20);
 	}

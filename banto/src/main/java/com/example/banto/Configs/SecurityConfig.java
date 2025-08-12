@@ -55,64 +55,24 @@ public class SecurityConfig {
 			request -> request
 			// 관리자만 허용된 URL
 			.requestMatchers(
-				new AntPathRequestMatcher("/api/apply/modify"),
-				new AntPathRequestMatcher("/api/apply/get-list/**"),
-				new AntPathRequestMatcher("/api/apply/get-info/**"),
-				new AntPathRequestMatcher("/api/manager/**"),
-				new AntPathRequestMatcher("/api/pay/get-user-info/**"),
-				new AntPathRequestMatcher("/api/pay/get-store-info/**"),
-				new AntPathRequestMatcher("/api/seller/delete/**"),
-				new AntPathRequestMatcher("/api/wallet/manager")
+				new AntPathRequestMatcher("/api/admin/**")
 			).hasRole("ADMIN")
 			// 판매자만 허용된 URL
 			.requestMatchers(
-				new AntPathRequestMatcher("/api/item/add-item"),
-				new AntPathRequestMatcher("/api/item/modify"),
-				new AntPathRequestMatcher("/api/item/option/modify"),
-				new AntPathRequestMatcher("/api/pay/modify"),
-				new AntPathRequestMatcher("/api/pay/get-my-store-info/**"),
-				new AntPathRequestMatcher("/api/qna/store/get-list/**"),
-				new AntPathRequestMatcher("/api/qna/add-answer"),
-				new AntPathRequestMatcher("/api/store/**"),
-				new AntPathRequestMatcher("/api/seller/get-info"),
-				new AntPathRequestMatcher("/api/seller/delete-me"),
-				new AntPathRequestMatcher("/api/group-item/delete"),
-				new AntPathRequestMatcher("/api/group-item/modify"),
-				new AntPathRequestMatcher("/api/group-item/add"),
-				new AntPathRequestMatcher("/api/group-pay/store/get-list")
+				new AntPathRequestMatcher("/api/seller/**"),
+				new AntPathRequestMatcher("/api/store/**")
 			).hasRole("SELLER")
 			// 구매자만 허용된 URL
 			.requestMatchers(
-				new AntPathRequestMatcher("/api/apply")
+				new AntPathRequestMatcher("/api/apply/**")
 			).hasRole("BUYER")
-			// 관리자, 판매자 둘 다에게 허용된 URL
-			.requestMatchers(
-				new AntPathRequestMatcher("/api/group-buy/get-list")
-			).hasAnyRole("ADMIN", "SELLER")
-			// 관리자, 구매자 둘 다에게 허용된 URL
-			.requestMatchers(
-				new AntPathRequestMatcher("/api/qna/delete"),
-				new AntPathRequestMatcher("/api/comment/delete")
-			).hasAnyRole("ADMIN", "BUYER")
 			// 판매자, 구매자 둘 다에게 허용된 URL
 			.requestMatchers(
-				new AntPathRequestMatcher("/api/apply/my-info"),
-				new AntPathRequestMatcher("/api/cart/**"),
-				new AntPathRequestMatcher("/api/favorite/**"),
-				new AntPathRequestMatcher("/api/qna/my-list/**"),
-				new AntPathRequestMatcher("/api/qna/add"),
-				new AntPathRequestMatcher("/api/pay"),
-				new AntPathRequestMatcher("/api/pay/get-info/**"),
-				new AntPathRequestMatcher("/api/qna/get-detail"),
-				new AntPathRequestMatcher("/api/user/modify"),
-				new AntPathRequestMatcher("/api/user/delete-me"),
-				new AntPathRequestMatcher("/api/wallet/my"),
-				new AntPathRequestMatcher("/api/comment/write"),
-				new AntPathRequestMatcher("/api/comment/get-my/**")
+				new AntPathRequestMatcher("/api/payment/**")
 			).hasAnyRole("SELLER", "BUYER")
 			// 관리자, 판매자, 구매자 셋 다에게 허용된 URL
 			.requestMatchers(
-				new AntPathRequestMatcher("/api/user/get-info")
+				new AntPathRequestMatcher("/api/user")
 			).hasAnyRole("ADMIN", "SELLER", "BUYER")
 			// 로그인한 사용자에게 허용
 			.anyRequest().permitAll()

@@ -47,7 +47,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	// Jackson
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-
+	// Elastic Search
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	// Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 

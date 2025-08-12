@@ -32,6 +32,7 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
         } catch (TokenCreationException e) {
             setErrorResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, "토큰 발급에 실패했습니다.");
         } catch (RuntimeException e){
+            System.out.println(e.getMessage());
             setErrorResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, "서버에 오류가 발생했습니다.");
         }
     }

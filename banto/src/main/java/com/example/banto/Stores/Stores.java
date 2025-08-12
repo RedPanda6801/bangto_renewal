@@ -24,7 +24,7 @@ public class Stores {
     @Column(name="STORE_NAME", nullable=false)
     private String storeName;
 
-    @Column(name="BUSI_NUM", nullable=false)
+    @Column(name="BUSI_NUM", nullable=false, unique = true)
     private String busiNum;
 
     @ManyToOne

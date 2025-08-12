@@ -21,11 +21,5 @@ public interface StoreRepository extends JpaRepository<Stores, Long> {
 	public Page<Stores> findAllBySellerId(Long sellerId, Pageable pageable);
 
 	public Optional<Stores> findByStoreName(String storeName);
-
-	@Query("SELECT s FROM Stores s WHERE s.seller.id = :sellerId")
-	public List<Stores> findAllBySellerIdToEntity(@Param("sellerId") Integer sellerId);
-
-	@Query("SELECT s FROM Stores s WHERE s.seller.user.id = :userId AND s.id = :storeId")
-	public Optional<Stores> findStoreByUserId(@Param("userId") Integer userId, @Param("storeId") Integer storeId);
 	
 }

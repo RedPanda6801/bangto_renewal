@@ -36,6 +36,7 @@ public class StoreService {
 				Long.parseLong(authentication.getName()))
 			.orElseThrow(() -> new ResourceNotFoundException("판매자 정보가 없습니다."));
 	}
+
 	@Transactional
 	public void create(StoreDTO dto) {
 		// 1. 권한 확인 및 판매자(로그인된) 정보 가져오기
@@ -50,7 +51,7 @@ public class StoreService {
 		// 1. 권한 확인 및 판매자(로그인된) 정보 가져오기
 		Sellers seller = authAndGetSeller(SecurityContextHolder.getContext().getAuthentication());
 		// 2. Pageable 객체 생성
-		Pageable pageable = PageRequest.of(20, page);
+		Pageable pageable = PageRequest.of(page, 20);
 		// 3. 판매자의 매장 모두 조회
 		Page<Stores> storesPage =
 			storeRepository.findAllBySellerId(seller.getId(), pageable);

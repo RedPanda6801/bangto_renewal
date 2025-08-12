@@ -43,10 +43,11 @@ public class ItemController {
 	// 필터링 검색
 	// 물건 이름, 매장 이름, 카테고리, 가격 범위
 	@GetMapping("/item/get-list/filtered")
-	public ResponseEntity<?> getFilteredItemList(@RequestBody SearchDTO dto) {
+	public ResponseEntity<?> getFilteredItemList(@ModelAttribute SearchDTO dto) {
 		PageDTO itemList = itemService.getFilteredItemList(dto);
 		return ResponseEntity.ok().body(itemList);
 	}
+
 	/*
 	// 매장 별 물건 조회(20개 씩)
 	@GetMapping("/item/get-list/store/{storeId}/{page}")
@@ -82,20 +83,21 @@ public class ItemController {
 	 */
 
 	// 물건 추가
-	@PostMapping(path = "/item/add-item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(path = "/seller/item/add-item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> addItem(@Valid @RequestPart("dto") ItemDTO itemDTO, @RequestPart(name = "files", required = false) List<MultipartFile> files) {
 		itemService.addItem(itemDTO, files);
 		return ResponseEntity.ok().body("물건 추가에 성공했습니다.");
 	}
+
 	// 물건 수정
-	@PutMapping(path = "/item/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PutMapping(path = "/seller/item/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> updateItem(@RequestPart("dto") ItemDTO itemDTO, @RequestPart(name = "files", required = false) List<MultipartFile> files) {
 			itemService.updateItem(itemDTO, files);
 			return ResponseEntity.ok().body("물건 수정에 성공했습니다.");
 	}
 
 	// 아이템 삭제
-	@PostMapping("/item/delete")
+	@PostMapping("/seller/item/delete")
 	public ResponseEntity<?> deleteItem(@RequestBody ItemDTO itemDTO) {
 		itemService.deleteItem(itemDTO);
 		return ResponseEntity.ok().body("물건 삭제에 성공했습니다.");

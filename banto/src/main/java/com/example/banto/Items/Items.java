@@ -9,6 +9,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(
+    uniqueConstraints = {
+        @UniqueConstraint(name = "unique_store_title", columnNames = {"store_pk", "title"})
+    }
+)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,10 +52,10 @@ public class Items {
 
     public static Items toEntity(ItemDTO dto) {
     	return Items.builder()
-    			.title(dto.getTitle())
-    			.price(dto.getPrice())
-    			.content(dto.getContent())
-    			.category(dto.getCategory())
-    			.build();
+            .title(dto.getTitle())
+            .price(dto.getPrice())
+            .content(dto.getContent())
+            .category(dto.getCategory())
+            .build();
     }
 }

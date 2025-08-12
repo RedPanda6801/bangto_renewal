@@ -30,34 +30,28 @@ public class JwtTokenFilter extends OncePerRequestFilter{
 		String path = request.getRequestURI();
 		// 토큰이 필요없는 모든 URL들 등록
 		return !(
-			// Swagger & Test
-			path.startsWith("/swagger-ui")
-			|| path.startsWith("/v3/api-docs")
-			|| path.startsWith("/test")
 			// User
-			|| path.startsWith("/api/sign")
+			path.startsWith("/api/sign")
 			|| path.startsWith("/api/login")
 			|| path.startsWith("/api/user/sns-sign")
 			// Item
-			|| path.startsWith("/api/item/get-list")
-			|| path.startsWith("/api/item/get-detail")
-			// Comment
-			|| path.startsWith("/api/comment/item")
-			|| path.startsWith("/api/comment/get")
-			|| path.startsWith("/api/item/get-by-title")
-			|| path.startsWith("/api/item/get-by-store-name")
-			|| path.startsWith("/api/item/get-by-category")
-			|| path.startsWith("/api/item/get-filtered-list")
-			|| path.startsWith("/api/item/get-recommend-list")
-			|| path.startsWith("/api/qna/item/get-list")
+			|| path.startsWith("/api/item")
 			// Cart
-			|| path.startsWith("cart")
+			|| path.startsWith("/api/cart")
+			// QNA
+			|| path.startsWith("/api/qna")
+			// Comment
+			|| path.startsWith("/api/comment")
 			// Config
 			|| path.equals("/index.html")
 			|| path.equals("/")
 			|| path.equals("/qna/detail")
 			|| path.startsWith("/static")
-			|| path.startsWith("/images"));
+			|| path.startsWith("/images")
+			// Swagger & Test
+			|| path.startsWith("/swagger-ui")
+			|| path.startsWith("/v3/api-docs")
+			|| path.startsWith("/test"));
 	}
 	
 	@Override

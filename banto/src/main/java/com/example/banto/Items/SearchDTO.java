@@ -16,6 +16,8 @@ public class SearchDTO {
 
     private CategoryType category;
 
+    private String storeName;
+
     private Integer maxPrice;
 
     private Integer minPrice;

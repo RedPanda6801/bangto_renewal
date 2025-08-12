@@ -31,7 +31,7 @@ public class QNAController {
 	}
 
 	// QNA 답변 추가(판매자)
-	@PutMapping("/qna/answer")
+	@PutMapping("/seller/qna/answer")
 	public ResponseEntity<?> answerToQNA(@RequestBody QNADTO qnaDTO) {
 		qnaService.answer(qnaDTO);
 		return ResponseEntity.ok().body("답변이 추가되었습니다");
@@ -45,7 +45,7 @@ public class QNAController {
 	}
 
 	// 매장 별 QNA 전체 조회(판매자)
-	@GetMapping("/qna/get-list/store/{storeId}/{page}")
+	@GetMapping("/seller/qna/get-list/store/{storeId}/{page}")
 	public ResponseEntity<?> getListByStore(@PathVariable("storeId") Long storeId, @PathVariable("page") Integer page) {
 		PageDTO qnaList = qnaService.getListByStore(storeId, page);
 		return ResponseEntity.ok().body(qnaList);

@@ -39,6 +39,8 @@ public class ItemDTO {
 
     private Integer star;
 
+    private String mainImage;
+
     private List<String> itemImages;
 
     private List<OptionDTO> options;
@@ -46,6 +48,30 @@ public class ItemDTO {
     private List<List<QNADTO>> qnas;
 
     private List<List<CommentDTO>> comments;
+
+    public static ItemDTO toListDTO(Items entity){
+        return ItemDTO.builder()
+            .id(entity.getId())
+            .title(entity.getTitle())
+            .sellerName(entity.getStore().getSeller().getUser().getName())
+            .storePk(entity.getStore().getId())
+            .storeName(entity.getStore().getStoreName())
+            .category(entity.getCategory())
+            .price(entity.getPrice())
+            .mainImage(entity.getItemImages().isEmpty() ? null : entity.getItemImages().get(0).getImgUrl())
+            .build();
+    }
+    public static ItemDTO toListDtoFromElastic(ItemDocument document){
+        return ItemDTO.builder()
+            .id(document.getItemId())
+            .title(document.getTitle())
+            .storePk(document.getStorePk())
+            .storeName(document.getStoreName())
+            .category(document.getCategory())
+            .price(document.getPrice())
+            .mainImage(document.getMainImage())
+            .build();
+    }
 
     public static ItemDTO toDTO(Items entity) {
         return ItemDTO.builder()
