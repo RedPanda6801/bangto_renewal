@@ -48,7 +48,7 @@ class ItemDAOTest {
 	@Transactional
 	void getStoreSuccessTest() {
 		System.out.println("성공 메소드 - input : 1");
-		int id = 1;
+		long id = 1;
 		
 		// 인증 유효 확인
 		Optional<Stores> store = storeRepository.findById(id);
@@ -59,7 +59,7 @@ class ItemDAOTest {
 	@Transactional
 	void getStorefailedTest() {
 		System.out.println("실패 메소드 - input : 2");
-		int id = 2;
+		long id = 2;
 		
 		// 인증 유효 확인
 		Optional<Stores> store = storeRepository.findById(id);
@@ -70,7 +70,7 @@ class ItemDAOTest {
 	@Test
 	@Transactional
 	void optionDeleteTest() {
-		int id = 2;
+		long id = 2;
 
 		// 인증 유효 확인
 		Optional<Options> option = optionRepository.findById(id);
@@ -93,7 +93,7 @@ class ItemDAOTest {
 	@Transactional
 	void getQNAByItem() {
 		System.out.println("성공 메소드 - input : 1");
-		int id = 1;
+		long id = 1;
 		Pageable pageable = PageRequest.of(0, 10, Sort.by("id").ascending());
 		Page<QNAs> qnaList = qnaRepository.findAllByItemId(id,pageable);
 		for(QNAs qna : qnaList){

@@ -42,119 +42,119 @@ VALUES (
     (SELECT s.id FROM sellers s JOIN users u ON s.user_pk = u.id WHERE u.email = 'seller@seller')
 );
 
--- 4. Items (매장 아이템 예시, 한 개씩)
--- alpha@domain.com 계정의 첫 매장에 아이템 추가 (예시로 연동)
-INSERT IGNORE INTO items (title, category, price, content, store_pk)
-VALUES (
-    '알파 첫 상품',
-    'DEFAULT_CATEGORY', -- 실제 Enum 저장값으로 변경 필요
-    10000,
-    '알파가 판매하는 첫 번째 상품입니다.',
-    (SELECT st.id FROM stores st JOIN sellers se ON st.seller_pk = se.id JOIN users u ON se.user_pk = u.id WHERE u.email = 'seller@seller' LIMIT 1)
-);
+---- 4. Items (매장 아이템 예시, 한 개씩)
+---- alpha@domain.com 계정의 첫 매장에 아이템 추가 (예시로 연동)
+--INSERT IGNORE INTO items (title, category, price, content, store_pk)
+--VALUES (
+--    '알파 첫 상품',
+--    'DEFAULT_CATEGORY', -- 실제 Enum 저장값으로 변경 필요
+--    10000,
+--    '알파가 판매하는 첫 번째 상품입니다.',
+--    (SELECT st.id FROM stores st JOIN sellers se ON st.seller_pk = se.id JOIN users u ON se.user_pk = u.id WHERE u.email = 'seller@seller' LIMIT 1)
+--);
+--
+--INSERT IGNORE INTO items (title, category, price, content, store_pk)
+--VALUES (
+--    '베타 첫 상품',
+--    'DEFAULT_CATEGORY',
+--    20000,
+--    '베타가 판매하는 첫 번째 상품입니다.',
+--    (SELECT st.id FROM stores st JOIN sellers se ON st.seller_pk = se.id JOIN users u ON se.user_pk = u.id WHERE u.email = 'seller@seller' LIMIT 1)
+--);
 
-INSERT IGNORE INTO items (title, category, price, content, store_pk)
-VALUES (
-    '베타 첫 상품',
-    'DEFAULT_CATEGORY',
-    20000,
-    '베타가 판매하는 첫 번째 상품입니다.',
-    (SELECT st.id FROM stores st JOIN sellers se ON st.seller_pk = se.id JOIN users u ON se.user_pk = u.id WHERE u.email = 'seller@seller' LIMIT 1)
-);
-
-INSERT IGNORE INTO items (title, category, price, content, store_pk)
-VALUES (
-    '감마 첫 상품',
-    'DEFAULT_CATEGORY',
-    30000,
-    '감마가 판매하는 첫 번째 상품입니다.',
-    (SELECT st.id FROM stores st JOIN sellers se ON st.seller_pk = se.id JOIN users u ON se.user_pk = u.id WHERE u.email = 'seller@seller' LIMIT 1)
-);
-
-INSERT IGNORE INTO options (add_price, option_info, amount, item_pk)
-VALUES
-    (1000, '기본 색상', 10,
-     (SELECT i.id
-      FROM items i
-      JOIN stores s ON i.store_pk = s.id
-      WHERE i.title = '알파 첫 상품' AND s.id = (
-          SELECT st.id
-          FROM stores st
-          JOIN sellers se ON st.seller_pk = se.id
-          JOIN users u ON se.user_pk = u.id
-          WHERE u.email = 'seller@seller'
-          LIMIT 1)
-      LIMIT 1)
-    ),
-    (2000, '확장 보증', 5,
-     (SELECT i.id
-      FROM items i
-      JOIN stores s ON i.store_pk = s.id
-      WHERE i.title = '알파 첫 상품' AND s.id = (
-          SELECT st.id
-          FROM stores st
-          JOIN sellers se ON st.seller_pk = se.id
-          JOIN users u ON se.user_pk = u.id
-          WHERE u.email = 'seller@seller'
-          LIMIT 1)
-      LIMIT 1)
-    );
-
-INSERT IGNORE INTO options (add_price, option_info, amount, item_pk)
-VALUES
-    (1500, '추가 배터리', 8,
-     (SELECT i.id
-      FROM items i
-      JOIN stores s ON i.store_pk = s.id
-      WHERE i.title = '베타 첫 상품' AND s.id = (
-          SELECT st.id
-          FROM stores st
-          JOIN sellers se ON st.seller_pk = se.id
-          JOIN users u ON se.user_pk = u.id
-          WHERE u.email = 'seller@seller'
-          LIMIT 1)
-      LIMIT 1)
-    ),
-    (2500, '프리미엄 케이스', 12,
-     (SELECT i.id
-      FROM items i
-      JOIN stores s ON i.store_pk = s.id
-      WHERE i.title = '베타 첫 상품' AND s.id = (
-          SELECT st.id
-          FROM stores st
-          JOIN sellers se ON st.seller_pk = se.id
-          JOIN users u ON se.user_pk = u.id
-          WHERE u.email = 'seller@seller'
-          LIMIT 1)
-      LIMIT 1)
-    );
-
-INSERT IGNORE INTO options (add_price, option_info, amount, item_pk)
-VALUES
-    (1200, '색상 선택', 20,
-     (SELECT i.id
-      FROM items i
-      JOIN stores s ON i.store_pk = s.id
-      WHERE i.title = '감마 첫 상품' AND s.id = (
-          SELECT st.id
-          FROM stores st
-          JOIN sellers se ON st.seller_pk = se.id
-          JOIN users u ON se.user_pk = u.id
-          WHERE u.email = 'seller@seller'
-          LIMIT 1)
-      LIMIT 1)
-    ),
-    (2200, '추가 충전기', 15,
-     (SELECT i.id
-      FROM items i
-      JOIN stores s ON i.store_pk = s.id
-      WHERE i.title = '감마 첫 상품' AND s.id = (
-          SELECT st.id
-          FROM stores st
-          JOIN sellers se ON st.seller_pk = se.id
-          JOIN users u ON se.user_pk = u.id
-          WHERE u.email = 'seller@seller'
-          LIMIT 1)
-      LIMIT 1)
-    );
+--INSERT IGNORE INTO items (title, category, price, content, store_pk)
+--VALUES (
+--    '감마 첫 상품',
+--    'DEFAULT_CATEGORY',
+--    30000,
+--    '감마가 판매하는 첫 번째 상품입니다.',
+--    (SELECT st.id FROM stores st JOIN sellers se ON st.seller_pk = se.id JOIN users u ON se.user_pk = u.id WHERE u.email = 'seller@seller' LIMIT 1)
+--);
+--
+--INSERT IGNORE INTO options (add_price, option_info, amount, item_pk)
+--VALUES
+--    (1000, '기본 색상', 10,
+--     (SELECT i.id
+--      FROM items i
+--      JOIN stores s ON i.store_pk = s.id
+--      WHERE i.title = '알파 첫 상품' AND s.id = (
+--          SELECT st.id
+--          FROM stores st
+--          JOIN sellers se ON st.seller_pk = se.id
+--          JOIN users u ON se.user_pk = u.id
+--          WHERE u.email = 'seller@seller'
+--          LIMIT 1)
+--      LIMIT 1)
+--    ),
+--    (2000, '확장 보증', 5,
+--     (SELECT i.id
+--      FROM items i
+--      JOIN stores s ON i.store_pk = s.id
+--      WHERE i.title = '알파 첫 상품' AND s.id = (
+--          SELECT st.id
+--          FROM stores st
+--          JOIN sellers se ON st.seller_pk = se.id
+--          JOIN users u ON se.user_pk = u.id
+--          WHERE u.email = 'seller@seller'
+--          LIMIT 1)
+--      LIMIT 1)
+--    );
+--
+--INSERT IGNORE INTO options (add_price, option_info, amount, item_pk)
+--VALUES
+--    (1500, '추가 배터리', 8,
+--     (SELECT i.id
+--      FROM items i
+--      JOIN stores s ON i.store_pk = s.id
+--      WHERE i.title = '베타 첫 상품' AND s.id = (
+--          SELECT st.id
+--          FROM stores st
+--          JOIN sellers se ON st.seller_pk = se.id
+--          JOIN users u ON se.user_pk = u.id
+--          WHERE u.email = 'seller@seller'
+--          LIMIT 1)
+--      LIMIT 1)
+--    ),
+--    (2500, '프리미엄 케이스', 12,
+--     (SELECT i.id
+--      FROM items i
+--      JOIN stores s ON i.store_pk = s.id
+--      WHERE i.title = '베타 첫 상품' AND s.id = (
+--          SELECT st.id
+--          FROM stores st
+--          JOIN sellers se ON st.seller_pk = se.id
+--          JOIN users u ON se.user_pk = u.id
+--          WHERE u.email = 'seller@seller'
+--          LIMIT 1)
+--      LIMIT 1)
+--    );
+--
+--INSERT IGNORE INTO options (add_price, option_info, amount, item_pk)
+--VALUES
+--    (1200, '색상 선택', 20,
+--     (SELECT i.id
+--      FROM items i
+--      JOIN stores s ON i.store_pk = s.id
+--      WHERE i.title = '감마 첫 상품' AND s.id = (
+--          SELECT st.id
+--          FROM stores st
+--          JOIN sellers se ON st.seller_pk = se.id
+--          JOIN users u ON se.user_pk = u.id
+--          WHERE u.email = 'seller@seller'
+--          LIMIT 1)
+--      LIMIT 1)
+--    ),
+--    (2200, '추가 충전기', 15,
+--     (SELECT i.id
+--      FROM items i
+--      JOIN stores s ON i.store_pk = s.id
+--      WHERE i.title = '감마 첫 상품' AND s.id = (
+--          SELECT st.id
+--          FROM stores st
+--          JOIN sellers se ON st.seller_pk = se.id
+--          JOIN users u ON se.user_pk = u.id
+--          WHERE u.email = 'seller@seller'
+--          LIMIT 1)
+--      LIMIT 1)
+--    );
 

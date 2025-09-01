@@ -58,8 +58,10 @@ dependencies {
 	testImplementation 'org.mockito:mockito-inline:5.0.0'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// FixtureMonkey
+	implementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.1.14'
+	testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:1.1.14'
 }
 
 tasks.named('test') {

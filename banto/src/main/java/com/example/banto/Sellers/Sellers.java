@@ -23,12 +23,14 @@ public class Sellers {
 	private Boolean isBanned;
 
 	//@ToString.Exclude  // 필드에 적용
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy="seller", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Stores> stores;
 
 	@JsonIgnore
-	//@EqualsAndHashCode.Exclude
-	//@ToString.Exclude  // 필드에 적용
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude  // 필드에 적용
 	@OneToOne
 	@JoinColumn(name = "USER_PK")
 	private Users user;

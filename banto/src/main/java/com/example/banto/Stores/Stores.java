@@ -28,6 +28,8 @@ public class Stores {
     private String busiNum;
 
     @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JoinColumn(name="SELLER_PK")
     private Sellers seller;
 

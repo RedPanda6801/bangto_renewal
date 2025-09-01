@@ -51,9 +51,9 @@ public class Users {
     private Integer cash;
 
     @JsonIgnore
-    //@EqualsAndHashCode.Exclude
-    //@ToString.Exclude
-    @OneToOne(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
     private Sellers sellers;
 
     // 1 : N Relation (Cascade = REMOVE)

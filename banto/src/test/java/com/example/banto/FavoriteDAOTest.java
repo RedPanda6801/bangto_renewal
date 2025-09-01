@@ -34,7 +34,7 @@ class FavoriteDAOTest {
 	@Transactional
 	void successTest() {
 		System.out.println("성공 메소드 - input : 1");
-		int id = 1;
+		long id = 1;
 		// Data
 		
 		// When
