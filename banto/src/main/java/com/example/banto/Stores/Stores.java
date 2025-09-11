@@ -33,6 +33,7 @@ public class Stores {
     @JoinColumn(name="SELLER_PK")
     private Sellers seller;
 
+    @ToString.Exclude
     @OneToMany(mappedBy="store", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Items> items;
 

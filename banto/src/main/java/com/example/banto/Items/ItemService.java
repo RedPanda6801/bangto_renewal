@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class ItemService {
 	private final StoreRepository storeRepository;
 	private final ItemImagesRepository itemImagesRepository;
 	private final ItemElasticsearchRepository itemElasticsearchRepository;
+	private final KafkaTemplate<String, ItemSearchLog> kafkaTemplate;
 	private final AuthService authService;
 	private final EnvConfig envConfig;
 
@@ -61,7 +63,9 @@ public class ItemService {
 		// 1. 물품 id로 조회
 		Items item = itemRepository.findById(itemId)
 			.orElseThrow(() -> new ResourceNotFoundException("물건 정보가 없습니다."));
-		// 2. DTO로 변환 후 반환
+		// 2. 세부 조회 로그를 kafka로 전송
+		kafkaTemplate.send("search-item-log", ItemSearchLog.setLog(item));
+		// 3. DTO로 변환 후 반환
 		return ItemDTO.toDTO(item);
 	}
 

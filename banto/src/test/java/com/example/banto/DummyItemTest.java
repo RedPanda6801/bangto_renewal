@@ -5,6 +5,7 @@ import com.example.banto.Items.ItemBulkRepository;
 import com.example.banto.Items.ItemDTO;
 import com.example.banto.Items.ItemRepository;
 import com.example.banto.Items.Items;
+import com.example.banto.Options.OptionDTO;
 import com.example.banto.Stores.StoreRepository;
 import com.example.banto.Stores.Stores;
 import jakarta.transaction.Transactional;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class DummyDataTest {
+public class DummyItemTest {
 
     @Autowired
     private ItemBulkRepository itemBulkRepository;
@@ -37,6 +38,30 @@ public class DummyDataTest {
         long endTime = System.currentTimeMillis();
         System.out.println("---------------------------------");
         System.out.printf("수행시간: %d\n", endTime - startTime);
+        System.out.println("---------------------------------");
+    }
+
+    @Test
+    @Transactional
+    @Rollback(false)
+    public void setDummyItemDataWithOption(){
+        // 카테고리 배열 선언
+        CategoryType[] categories = CategoryType.values();
+        List<ItemDTO> itemList = getItemDTOS(categories);
+        long fstStartTime = System.currentTimeMillis();
+        itemBulkRepository.saveAll(itemList);
+        long fstEndTime = System.currentTimeMillis();
+        System.out.println("---------------------------------");
+        System.out.printf("수행시간: %d\n", fstEndTime - fstStartTime);
+        System.out.println("---------------------------------");
+
+        List<Items> addItemList = itemRepository.findAll();
+        List<OptionDTO> optionList = getOptionDTOs(addItemList);
+        long secStartTime = System.currentTimeMillis();
+        itemBulkRepository.saveOptionAll(optionList);
+        long secEndTime = System.currentTimeMillis();
+        System.out.println("---------------------------------");
+        System.out.printf("수행시간: %d\n", secEndTime - secStartTime);
         System.out.println("---------------------------------");
     }
 
@@ -85,5 +110,21 @@ public class DummyDataTest {
             itemList.add(entity);
         }
         return itemList;
+    }
+
+    private List<OptionDTO> getOptionDTOs(List<Items> itemList) {
+        List<OptionDTO> optionDTOList = new ArrayList<>();
+        for (Items item : itemList) {
+            for(int i = 0; i < 2; i++){
+                OptionDTO dto = OptionDTO.builder()
+                    .itemPk(item.getId())
+                    .optionInfo(String.format("옵션 정보 %d - %d", item.getId(), i))
+                    .amount(10000)
+                    .addPrice(2000)
+                    .build();
+                optionDTOList.add(dto);
+            }
+        }
+        return optionDTOList;
     }
 }

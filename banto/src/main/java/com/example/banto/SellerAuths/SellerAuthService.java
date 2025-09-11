@@ -13,9 +13,11 @@ import com.example.banto.Users.Users;
 import com.example.banto.Utils.DTOMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SellerAuthService {
@@ -30,6 +33,7 @@ public class SellerAuthService {
 	private final SellerAuthRepository sellerAuthRepository;
 	private final SellerRepository sellerRepository;
 	private final StoreRepository storeRepository;
+	private final KafkaTemplate<String, String> kafkaTemplate;
 	private final AuthService authService;
 
 	@Transactional
@@ -52,6 +56,15 @@ public class SellerAuthService {
 		SellerAuths entity = SellerAuths.toEntity(sellerAuthDTO, user);
 		// 6. DB에 반영
 		sellerAuthRepository.save(entity);
+		// 7. kafka로 root에 실시간 알림
+		kafkaTemplate.send("apply-seller", "NEW_APPLY")
+			.whenComplete((result, ex) -> {
+				if (ex == null) {
+					log.debug("Success: {} ", result.getRecordMetadata());
+				} else {
+					log.error("Failed: {}", ex.getMessage());
+				}
+			});
 	}
 
 	public List<SellerAuthDTO> getSellerAuthList() {
