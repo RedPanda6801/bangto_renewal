@@ -38,26 +38,26 @@ public class ItemService {
 	private final KafkaTemplate<String, ItemSearchLog> kafkaTemplate;
 	private final AuthService authService;
 	private final EnvConfig envConfig;
-
-	public void setTestData(){
-		// 1. Admin 권한 확인
-		authService.authToAdmin(SecurityContextHolder.getContext().getAuthentication());
-		// 2. 매장 조회
-		Stores store = storeRepository.findById(1L).orElseThrow(() ->
-			new ResourceNotFoundException("매장이 없습니다."));
-		// 3. 매장을 기반으로 더미 데이터 생성
-		// given
-		FixtureMonkey fm = FixtureMonkey.builder()
-			.addExceptGenerateClass(Stores.class)
-			.build();
-		// set item for random
-		Items item = fm.giveMeBuilder(Items.class)
-			.set("store", null)
-			.set("id", null)
-			.sample();
-
-		System.out.println(item);
-	}
+//
+//	public void setTestData(){
+//		// 1. Admin 권한 확인
+//		authService.authToAdmin(SecurityContextHolder.getContext().getAuthentication());
+//		// 2. 매장 조회
+//		Stores store = storeRepository.findById(1L).orElseThrow(() ->
+//			new ResourceNotFoundException("매장이 없습니다."));
+//		// 3. 매장을 기반으로 더미 데이터 생성
+//		// given
+//		FixtureMonkey fm = FixtureMonkey.builder()
+//			.addExceptGenerateClass(Stores.class)
+//			.build();
+//		// set item for random
+//		Items item = fm.giveMeBuilder(Items.class)
+//			.set("store", null)
+//			.set("id", null)
+//			.sample();
+//
+//		System.out.println(item);
+//	}
 
 	public ItemDTO getItemDetail(Long itemId) {
 		// 1. 물품 id로 조회

@@ -19,11 +19,11 @@ public class ItemController {
 
 	private final ItemService itemService;
 
-	@PostMapping("/admin/item/add/test-data")
-	public ResponseEntity<?> setTestDataWithFixtureMonkey(){
-		itemService.setTestData();
-		return ResponseEntity.ok().body("Create Success");
-	}
+//	@PostMapping("/admin/item/add/test-data")
+//	public ResponseEntity<?> setTestDataWithFixtureMonkey(){
+//		itemService.setTestData();
+//		return ResponseEntity.ok().body("Create Success");
+//	}
 
 	// 단일 물건 세부 조회
 	@GetMapping("/item/get-detail/{itemId}")
