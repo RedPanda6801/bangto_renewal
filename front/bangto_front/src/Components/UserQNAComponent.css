@@ -1,0 +1,62 @@
+.layout_Item_QNA_Contents
+{  
+    display: grid;
+	grid-template-columns: repeat(19, 100px);
+	grid-auto-rows: minmax(30px, auto);
+    padding-top: 80px;
+}
+
+.box_Item_QNA_Regi
+{
+    grid-column: 6 / 16;
+    grid-auto-rows: minmax(30px, auto);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
+}
+
+.table_Item_QNA_Regi
+{
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid #bbb;
+    margin: 10px 0px;
+    text-align: left;
+}
+
+.table_Item_QNA_Regi td
+{
+    padding: 10px;
+    border: 1px solid #bbb;
+}
+
+.table_Item_QNA_Regi tr:nth-child(2) td:first-child
+{
+    width: 10%;
+    height: 100px;
+}
+
+.table_Item_QNA_Regi tr:nth-child(2) td:nth-child(1)
+{
+    text-align: center;
+}
+
+.btn_QNA
+{
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f8c8c8;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 30px;
+}

@@ -1,0 +1,292 @@
+.layout_Store
+{  
+	/* display: grid; */
+	/* grid-template-columns: repeat(19, 100px); */
+	grid-auto-rows: minmax(30px, auto);
+  padding-top: 80px;
+
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+
+}
+
+.layout_Contents
+{  
+  /* grid-column: 6 / 16; */
+  width: 1000px;
+  grid-auto-rows: minmax(30px, auto);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.box_Store_Menu
+{  
+  /* grid-column: 4 / 6; */
+  width: 200px;
+  grid-auto-rows: minmax(30px, auto);
+  
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0px;
+}
+
+.box_Storeauth_Apply
+{
+  grid-auto-rows: minmax(30px, auto);
+  
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid black;
+  width: 400px;
+  height: 330px;
+	position: absolute;
+}
+
+.box_Store_Detail,
+.box_QNA_Detail,
+.box_Sold_Detail,
+.box_Group_Detail
+{  
+  grid-auto-rows: minmax(30px, auto);
+
+  width: 900px;
+}
+
+.box_Store_Info,
+.box_Item_Info
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.Auth_Store_name  , 
+.Auth_Busi_Num
+{
+  width: 300px;
+  height: 30px;
+	outline: none;
+	font-size: 20px;
+	padding: 10px;
+  border: 1px solid black;
+}
+
+.Auth_Store_name
+{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.Auth_Store_name
+{
+  margin-top: -7px;
+}
+
+.Auth_Busi_Num
+{
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-top: -7px;
+  margin-bottom: 30px;
+}
+
+.Auth_Store_name:focus,
+.Auth_Busi_Num:focus
+{ 
+  position: relative;
+  z-index: 10; 
+  border: 1px solid #FF3636;
+}
+
+.btn_Store_Auth
+{
+  width: 219px;
+  height: 54px;
+  border: none;
+  border-radius: 7px;
+  background-color: #FF3636;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.StoreAuth_Ck_Error_Message
+{	
+	color: red;
+	position: absolute;
+	top: 262px;
+	font-size: 16px;
+}
+
+.btn_Store_Auth:disabled
+{
+  cursor: default;
+	background-color: #b82323;
+}
+
+.btn_StoreMenu_StoreAuth
+{
+  border: none;
+  background-color: white;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  padding: 3px;
+  border-bottom: 1px solid lightgray;
+}
+
+.store_Menu_Title 
+{  
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 2px;
+  padding: 2px;
+  border-bottom: 1px solid lightgray;
+  cursor: default;
+}
+
+.submenu_list
+{
+  font-size: 16px;
+}
+
+.store_Submenu
+{
+  margin: 7px 0px;
+  cursor: pointer;
+}
+
+.box_Store_Info table
+{
+  width: 80%;
+  border-collapse: collapse;
+  cursor: default;
+}
+
+.box_Store_Info th,
+.box_Store_Info td,
+.box_Item_Info th,
+.box_Item_Info td,
+.box_QNA_Detail th,
+.box_QNA_Detail td,
+.box_Sold_Detail th,
+.box_Sold_Detail td,
+.box_Group_Detail th,
+.box_Group_Detail td
+{
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.box_Store_Info th,
+.box_Item_Info th,
+.box_QNA_Detail th,
+.box_Sold_Detail th,
+.box_Group_Detail th
+{
+  font-size: 17px;
+  font-weight: 700;
+  background-color: #f8c8c8;
+  text-align: center;
+}
+
+.box_Store_Info td,
+.box_Item_Info td,
+.box_QNA_Detail td,
+.box_Sold_Detail td,
+.box_Group_Detail td
+{
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.box_Store_Info button
+{
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 15px;
+}
+
+.box_Store_Info button:hover,
+.btn_Store_Add:hover,
+.box_Item_Info button:hover,
+.box_Sold_Detail button:hover,
+.box_Group_Detail button:hover
+{
+  border: 1px solid #FF3636;
+}
+
+.btn_Store_Add
+{  
+  width: 100%;
+  padding: 10px 0px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.box_Item_Info table,
+.box_QNA_Detail table,
+.box_Sold_Detail table
+{
+  width: 100%;
+  border-collapse: collapse;
+  cursor: default;
+}
+
+.box_Item_Info button,
+.box_Sold_Detail button,
+.box_Group_Detail button
+{
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 15px;
+}
+
+.box_Item_Info td:nth-child(4),
+.box_Item_Info td:nth-child(5),
+.box_Item_Info td:nth-child(6),
+.box_Sold_Detail td:nth-child(3),
+.box_Group_Detail td:nth-child(3)
+{
+  text-align: center;
+}
+
+.box_QNA_Detail td:nth-child(3),
+.box_Sold_Detail td:nth-child(3),
+.box_Group_Detail td:nth-child(3)
+{
+  width: 100px;
+}
+
+.box_Group_Detail table
+{
+  width: 100%;
+  border-collapse: collapse;
+  cursor: default;
+}
+
+.box_QNA_Detail td:nth-child(2)
+{
+  cursor: pointer;
+}

@@ -1,0 +1,281 @@
+.layout_User_Pay
+{  
+	/* display: grid;
+	grid-template-columns: repeat(19, 100px);
+	grid-auto-rows: minmax(30px, auto); */
+	margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1500px) 
+{
+    .layout_User_Pay 
+    {
+        grid-template-columns: repeat(19, 79px);
+    }    
+}
+
+.box_Overflow_Hidden
+{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.box_Fontweight_Bold
+{
+    font-weight: bold;
+}
+
+.box_User_Pay
+{    
+    /* grid-column: 7 / 14; */
+    width: 700px;
+    grid-auto-rows: minmax(30px, auto);
+  
+    display: flex;
+    flex-direction: column;
+    margin: 40px 0px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    padding: 10px;
+    align-items: center;
+}
+
+.box_User_Pay_Items
+{
+    width: 500px;
+    margin: 10px 0px;
+    border-collapse: collapse;
+    border: 1px solid #bbb;
+}
+
+.box_User_Pay_Items tr:first-child td:first-child
+{
+    width: 120px;
+    height: 120px;
+    text-align: center;
+}
+
+.box_User_Pay_Items tr:nth-child(2) td:nth-child(2),
+.box_User_Pay_Items tr:nth-child(2) td:nth-child(3),
+.box_User_Pay_Items tr:nth-child(2) td:nth-child(4)
+{
+    width: 120px;
+    text-align: center;
+}
+
+.btn_User_Pay_Img
+{
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    cursor: default;
+}
+
+.User_Pay_Addr_Road,
+.User_Pay_Addr_Detail,
+.User_Pay_Addr_Zip,
+.User_Pay_Addr
+{
+	width: 300px;
+	height: 30px;
+	font-size: 18px;
+	padding: 10px;
+	outline: none;
+	border: 1px solid #ccc;
+}
+
+.User_Pay_Addr_Detail
+{
+	margin-top: -5px;
+}
+
+.User_Pay_Addr_Zip
+{
+	margin-top: -7px;
+    margin-bottom: 10px;
+}
+
+.User_Pay_Addr_Road,
+.User_Pay_Addr
+{
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.User_Pay_Addr_Zip,
+.User_Pay_Addr
+{
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.User_Pay_Addr_Road:focus,
+.User_Pay_Addr_Detail:focus
+.User_Pay_Addr_Zip:focus,
+.User_Pay_Addr:focus,
+.User_Pay_Use_Cash:focus
+{
+	position: relative;
+	z-index: 10;
+	border: 1px solid #FF3636;
+}
+
+.User_Pay_Addr_Road 
+{ 
+	height: 60px;
+	line-height: 20px;
+	white-space: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+}
+
+.User_Pay_Addr_Search
+{	
+    position: relative;
+    left: 20px; 
+
+	height: 30px;
+	width: 60px;
+
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: white;
+	font-size: 13px;
+
+	cursor: pointer;
+}
+
+.User_Pay_Addr_Search:hover
+{
+	color: #FF3636;
+	border: 1px solid #FF3636;
+}
+
+.User_Pay_Addr
+{
+    margin-top: 20px;
+    margin-left: 60px;
+}
+
+.User_Pay_Cash
+{
+    border-collapse: collapse;
+    width: 300px;
+    margin: 23px 0px;
+}
+
+.User_Pay_Cash tr
+{
+    height: 50px;
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+}
+
+.User_Pay_Cash td:nth-child(2)
+{
+    text-align: right;
+}
+
+.User_Pay_Use_Cash
+{
+    width: 70px;
+    margin-right: 5px;
+    text-align: right;
+    font-size: 15px;
+    outline: none;
+    border: 1px solid black
+}
+
+.btn_User_Pay_Cash
+{
+    width: 118px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f8c8c8;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0px 20px;
+    margin-bottom: 10px;
+}
+
+.div_line
+{
+    border: 1px solid #ccc;
+    width: 95%;
+    margin-top:10px;
+}
+
+.modal_User_Pay_Overlay
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal_User_Pay
+{
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: center;
+}
+
+.btn_User_Pay
+{
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f8c8c8;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0px 10px;
+}
+
+.box_User_Pay_Info
+{
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 250px;
+    border: 1px solid grey;
+}
+
+.flex_Space_Between
+{
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.border_Top_Grey
+{
+    border-top: 1px solid grey;
+}
+
+.box_User_Pay_Buttons
+{
+    display: flex;
+    margin: 20px 0 0;
+}

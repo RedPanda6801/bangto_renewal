@@ -1,0 +1,119 @@
+.layout_Group_Contents
+{  
+    /* display: grid;
+    grid-template-columns: repeat(38, 50px);
+    grid-auto-rows: minmax(15px, auto); */
+    padding-top: 80px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box_Group_Promote
+{    
+    /* grid-column: 10 / 28; */
+    width: 900px;
+    /* grid-row: 3 / 20; */
+    height: 255px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+.box_Slide
+{
+    height: 500px;
+}
+.box_item
+{
+    height: 500px;
+}
+.box_Group_Date
+{
+    /* grid-column: 10 / 28; */
+    width: 900px;
+    /* grid-row: 20 / 23; */
+    height: 45px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Guide
+{
+    /* grid-column: 10 / 28; */
+    width: auto;
+    /* grid-row: 23 / 28; */
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+    text-align: center;
+}
+.box_group_Item_Infobox{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.box_Group_Itemlist
+{
+    /* grid-column: 10 / 28; */
+    width: 900px;
+    /* grid-row: 28 / 30; */
+    /* height: 30px; */
+
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid black;
+}
+
+.box_Group_Itemlist input
+{
+  width: 380px;
+  height: 240px;
+  border: 1px solid #ccc;
+}
+.group_item_list{
+    width: 1000px;
+    display: flex;
+    flex-flow : wrap;
+    justify-content: flex-start; /* 왼쪽 정렬 (기본값) */
+}
+.group_Item
+{
+  border: 1px solid #ccc;
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+  margin: 15px;
+  padding-top: 13px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.group_item_img
+{
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+}
+.box_pay_button
+{
+    width: 100%;
+    float : left;
+}

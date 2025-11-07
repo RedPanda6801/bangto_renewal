@@ -1,0 +1,284 @@
+.layout_User_Cart
+{  
+    /* display: grid;
+    grid-template-columns: repeat(19, 100px);
+	grid-auto-rows: minmax(30px, auto); */
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.box_User_Cart
+{    
+    /* grid-column: 6 / 14; */
+    width: 800px;
+    grid-auto-rows: minmax(30px, auto);
+  
+    display: flex;
+    flex-direction: column;
+    margin: 40px 0px;
+}
+
+.box_User_Cart_Item
+{
+    padding: 10px;
+}
+
+.box_User_Cart_Item table
+{
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+.box_User_Cart_Info 
+{
+    position: fixed;
+    top: 200px;
+    right: 200px;
+    width: 250px;
+    height: auto;
+    z-index: 10;
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+
+.box_User_Cart_SelectAll
+{
+    font-size: 17px;
+    padding-left: 12px;
+}
+
+.btn_User_Cart_SelectAll
+{
+    margin: 10px;
+}
+
+.btn_User_Cart_Img
+{
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    cursor: default;
+}
+
+.box_User_Cart_Item tr:first-child td:nth-child(2)
+{
+    width: 120px;
+    height: 120px;
+}
+
+.box_User_Cart_Item tr:first-child td:nth-child(1)
+{
+    width: 30px;
+}
+
+.box_User_Cart_Item tr:first-child td:nth-child(3)
+{
+    text-align: left;
+}
+
+.box_User_Cart_Item tr:nth-child(2) td:first-child
+{
+    text-align: right;
+}
+
+.box_Cart_Item
+{
+    display: flex;
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    align-items: center;
+    position: relative;
+}
+
+.box_Cart_Delete
+{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.box_Cart_CheckBox,
+.box_Cart_Img
+{
+    margin-right: 10px;
+}
+
+.box_Cart_Item_Title
+{   
+    /* margin: 15px 5px; */
+    /* display: block; */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    cursor: pointer;
+    /* max-width: 625px; */
+}
+
+.box_Cart_Item_Option
+{
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.cart_Item_Option
+{
+    width: 400px;
+    margin-right: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.cart_Item_Amount
+{
+    width: 50px;
+    margin-right: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.cart_Item_Price
+{
+    width: 135px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.btn_Opt_Modi
+{
+    width: 100px;
+}
+
+.btn_User_Cart_Opt_Modi
+{    
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f8c8c8;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.box_Cart_Item_Info
+{
+    width: 625px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100px;
+}
+
+.box_User_Cart_Info table
+{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.box_User_Cart_Info td:nth-child(2)
+{
+    text-align: right;
+}
+
+.box_User_Cart_Info tr
+{
+    height: 50px;
+}
+
+.box_User_Cart_Info button
+{
+    width: 218px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f8c8c8;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal_User_Pay_Option_Overlay
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal_User_Pay_Option
+{
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: center;
+}
+
+.modal_User_Pay_Option table
+{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+}
+
+.modal_User_Pay_Option td:nth-child(2)
+{
+    text-align: right;
+    height: 50px;
+}
+
+.modal_User_Pay_Option input
+{
+    width: 80px;
+    margin-right: 5px;
+}
+
+.modal_User_Pay_Option button
+{
+    width: 140px;
+    height: 40px;
+    border-radius: 7px;
+    border: none;
+    background-color: #f8c8c8;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 10px 0px;
+}
+
+.box_No_Item
+{
+    font-size: 20px;
+    font-weight: bold;
+    height: 500px;
+    padding: 200px 0;
+    text-align: center;
+}

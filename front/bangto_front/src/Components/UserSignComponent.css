@@ -1,0 +1,375 @@
+.layout_Sign
+{  
+	margin: auto;
+	/* display: grid; */
+	/* grid-template-columns: repeat(19, 100px); */
+	grid-template-rows: repeat(29, 30px);
+	padding-top: 45px;
+  display: flex;
+  justify-content: center;
+}
+
+.box_Sign
+{
+  /* grid-column: 8 / 13; */
+  width: 500px;
+  /* grid-row: 3 / 28; */
+  height: 750px;
+  margin: 60px 0;
+  
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid black;
+  position: relative;
+}
+
+.sign_Email			, 
+.sign_Pw			, 
+.sign_Pw_Ck			, 
+.sign_Name			, 
+.sign_Tel			, 
+.sign_Addr			, 
+.sign_Addr_Road		, 
+.sign_Addr_Detail	, 
+.sign_Addr_Zip		
+{
+	width: 300px;
+	height: 30px;
+	font-size: 18px;
+	padding: 10px;
+	outline: none;
+	border: 1px solid black;
+}
+
+.sign_Pw		, 
+.sign_Pw_Ck		, 
+.sign_Tel		, 
+.sign_Addr_Zip
+{
+	margin-top: -7px;
+}
+
+.sign_Addr_Detail
+{
+	margin-top: -5px;
+}
+
+.sign_Email		, 
+.sign_Name		, 
+.sign_Addr		, 
+.sign_Addr_Road	,
+.sign_Submit
+{
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.sign_Pw_Ck		, 
+.sign_Tel		, 
+.sign_Addr		, 
+.sign_Addr_Zip	,
+.sign_Submit
+{
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.sign_Pw_Ck		, 
+.sign_Tel		, 
+.sign_Addr_Zip
+{
+	margin-bottom: 26px;
+}
+
+.sign_Email:focus		, 
+.sign_Pw:focus			, 
+.sign_Pw_Ck:focus		, 
+.sign_Name:focus		, 
+.sign_Tel:focus			,
+.sign_Addr:focus		,
+.sign_Addr_Road:focus	,
+.sign_Addr_Detail:focus	,
+.sign_Addr_Zip:focus
+{
+	position: relative;
+	z-index: 10;
+	border: 1px solid #FF3636;
+}
+
+.pW_Ck_Error_Message
+{
+	color: red;
+	position: absolute;
+	top: 250px;
+	font-size: 16px;
+}
+
+.sign_Addr_Search
+{	
+	position: absolute;
+	/* top: 523px; */
+	/* left: 1127px; */
+  right: 30px;
+  top: 362px;
+
+	height: 30px;
+	width: 60px;
+
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: white;
+	font-size: 13px;
+
+	cursor: pointer;
+}
+
+.sign_Addr_Search:hover
+{
+	color: #FF3636;
+	border: 1px solid #FF3636;
+}
+
+.sign_Addr_Road 
+{ 
+	height: 60px;
+	line-height: 20px;
+	white-space: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+}
+
+.info_Ck_Error_Message
+{	
+	color: red;
+	position: absolute;
+	top: 600px;
+  margin-top: 20px;
+	font-size: 16px;
+}
+
+.sign_Submit
+{
+	width: 322px;
+	height: 52px;
+	border: none;
+	background-color: #FF3636;
+	color: white;
+	font-size: 21px;
+	cursor: pointer;
+}
+  
+.sign_Submit:disabled
+{
+	cursor: default;
+	background-color: #b82323;
+}
+
+.modal_Addr			,
+.modal_Membership 
+{
+	position: fixed;
+	top: 55%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
+	background-color: white;
+	border-radius: 10px;
+	width: 640px;
+  /* height: 600px; */
+	overflow-y: auto;
+	padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal_Addr
+{
+	height: 689px;
+}
+
+.modal_Membership 
+{
+	height: 697px;
+}
+
+.modal_Addr_Close
+{
+	position: absolute;
+	top: 20px;
+	left: 590px;
+
+	height: 30px;
+	width: 30px;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+
+	padding-top: 2px; 
+	padding-left: 8px; 
+	cursor: pointer;
+}
+
+.modal_Addr h3
+{	
+	margin-left: 20px;
+}
+
+.modal_Addr table
+{
+	border-collapse: collapse;
+	width: 600px;
+	margin-left: 20px;
+}
+
+.modal_Addr table, .modal_Addr td, .modal_Addr th 
+{
+	border: 1px solid black;
+	padding: 10px;
+  cursor: pointer;
+}
+
+.modal_Addr th
+{
+	text-align: center;
+	font-size: 18px;
+}
+
+.modal_Addr th:first-child
+{
+	width:450px;
+}
+
+.modal_Addr td:nth-child(2)
+{
+	text-align: center;
+}
+
+.modal_Overlay_Addr	,
+.modal_Overlay_Membership
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 999;
+}
+
+.pagination_Addr
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 0px;
+}
+  
+.pagination_Addr button 
+{
+	border: none;
+	background-color: white;
+	cursor: pointer;
+}
+  
+.pagination_Addr button.active	,
+.pagination_Addr button:hover 
+{
+	color: #FF3636;
+}
+
+.table_membership
+{
+	padding: 20px;
+	padding-bottom: 0px;
+}
+
+.membership_text
+{
+	width: 520px;      
+	max-height: 65px;
+	padding: 5px;     
+	overflow-y: auto;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.table_membership tr:nth-child(odd) td:nth-child(even) 
+{
+	font-size: 16px;
+	font-weight: 700;
+	padding: 5px;
+}
+
+.table_membership tr:nth-child(even) td:nth-child(even) 
+{
+	font-size: 13px;
+	padding: 0px 5px;
+	padding-bottom: 15px;
+}
+
+.table_membership tr:nth-child(2) td:nth-child(2) 
+{
+	padding-left: 11px;
+	padding-right: 50px;
+}
+
+.button_Agree
+{
+	cursor: pointer;
+}
+
+.button_Agree img
+{
+	background-color: white;
+	margin-top: 7px;
+	width: 24px;
+	cursor: pointer;
+}
+
+.button_Agree button
+{
+	border: none;
+	background-color: white;
+}
+
+.button_sign
+{
+	border: none;
+	border-radius: 10px;
+	background-color: white;
+	cursor: pointer;
+	height: 35px;
+	width: 270px;
+	background-color: #FF3636;
+	color: white;
+	font-size: 20px;
+	margin-left: 67px;
+	margin-right: 45px;
+	margin-top: 13px;
+}
+
+.button_auth
+{	
+	border: 1px solid black;
+	border-radius: 10px;
+	background-color: white;
+	cursor: pointer;
+	height: 35px;
+	width: 217px;
+	font-size: 16px;
+}
+  
+.button_sign:disabled
+{
+	background-color: #b82323;
+}
+
+.pointer
+{
+  cursor: pointer;
+}

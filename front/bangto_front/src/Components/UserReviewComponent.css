@@ -1,0 +1,76 @@
+.layout_User_Review {
+  /* display: grid;
+	grid-template-columns: repeat(19, 100px);
+	grid-auto-rows: minmax(30px, auto); */
+  padding-top: 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.modal_User_Review {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-items: center;
+}
+
+.box_User_Review {
+  /* grid-column: 6 / 16; */
+  width: 1000px;
+  grid-auto-rows: minmax(30px, auto);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.table_User_Review {
+  width: 80%;
+  border-collapse: collapse;
+  border: 1px solid #bbb;
+  margin: 10px 0px;
+}
+
+.table_User_Review td:first-child {
+  width: 15%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.table_User_Review td {
+  padding: 10px;
+  border: 1px solid #bbb;
+}
+
+.table_User_Review tr:nth-child(3) td:nth-child(2) {
+  height: 200px;
+}
+
+.btn_Review {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 7px;
+  background-color: #f8c8c8;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 30px;
+}
+
+.content_input_area {
+  width: 100%;
+  height: 100%;
+}

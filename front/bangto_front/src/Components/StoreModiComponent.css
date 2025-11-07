@@ -1,0 +1,86 @@
+.layout_Store_Modi {
+  padding-top: 80px;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.box_Store_Modi {
+  /* grid-column: 8 / 13; */
+  width: 500px;
+  /* grid-row: 3 / 19; */
+  height: 480px;
+  margin: 60px 0;
+
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.Modi_Seller_Name,
+.Modi_Store_Name,
+.Modi_Busi_Num {
+  width: 300px;
+  outline: 1px black;
+  font-size: 20px;
+  padding: 10px;
+  border: 3px;
+}
+
+.Modi_Seller_Name {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.Modi_Store_Name {
+  margin-top: -7px;
+}
+
+.Modi_Busi_Num {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-top: -7px;
+  margin-bottom: 30px;
+}
+
+.Modi_Seller_Name:focus,
+.Modi_Store_Name:focus,
+.Modi_Busi_Num:focus {
+  position: relative;
+  z-index: 10;
+  border: 1px solid #ff3636;
+}
+
+.StoreModi_Ck_Error_Message {
+  margin-top: 100px;
+  color: red;
+  position: absolute;
+  top: 500px;
+  font-size: 16px;
+}
+
+.box_btn_Store_Modi {
+  display: flex;
+  gap: 30px;
+}
+
+.btn_Store_Modi {
+  width: 130px;
+  height: 54px;
+  border: none;
+  border-radius: 7px;
+  background-color: #ff3636;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.btn_Store_Modi:disabled {
+  cursor: default;
+  background-color: #b82323;
+}

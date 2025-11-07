@@ -1,0 +1,29 @@
+.order_select_div{
+    display: flex;
+    justify-content: space-between; /* 두 항목을 양 끝에 배치 */
+    align-items: center; /* 세로 중앙 정렬 (선택 사항) */
+    width: 80%;
+    background-color: #f8c8c8;
+    border-radius: 5px;
+    
+}
+
+.order_select_button{
+    margin : 0px;
+    text-align: center;
+    width : 50%;
+}
+
+.order_select_button:hover {
+    background-color: #f2a1a1; /* hover 시 배경 색을 진하게 */
+}
+
+.invisible_item{
+    display: none;
+}
+.box_group_pay{
+    display : flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}

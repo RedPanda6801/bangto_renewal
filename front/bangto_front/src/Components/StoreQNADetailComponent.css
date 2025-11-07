@@ -1,0 +1,70 @@
+.layout_QNA
+{  
+	margin: auto;
+	/* display: grid;
+	grid-template-columns: repeat(19, 100px);
+	grid-template-rows: repeat(20, 30px); */
+    padding-top: 75px;
+    display: flex;
+    justify-content: center;
+    margin: 100px 0;
+}
+
+.box_QNA
+{
+    /* grid-column: 6 / 15; */
+    width: 900px;
+    /* grid-row: 3 / 18; */
+    /* min-height: 450px; */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.table_QNA
+{
+    border-collapse: collapse;
+    border: 1px solid #bbb;
+    width: 80%;
+}
+
+.table_QNA td:first-child
+{
+    font-size: 18px;
+    font-weight: 600;
+    width: 15%;
+    text-align: center;
+    border: 1px solid #bbb;
+}
+
+.table_QNA tr:nth-child(n+2)
+{
+    height: 100px;
+    border: 1px solid #bbb;
+}
+
+.table_QNA td:nth-child(3)
+{
+    width: 15%;
+    text-align: center;
+    border: 1px solid #bbb;
+}
+
+.table_QNA td:nth-child(n+1)
+{
+    padding: 10px;
+}
+
+.btn_QNA
+{    
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f8c8c8;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 15px;
+}

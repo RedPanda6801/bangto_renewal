@@ -1,0 +1,72 @@
+.layout_Store_Group_Item_Regi
+{  
+	/* display: grid;
+	grid-template-columns: repeat(19, 100px);
+	grid-template-rows: repeat(32, 30px); */
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.box_Store_Group_Item_Add
+{
+    /* grid-column: 6 / 15;
+    grid-row: 1 / 29; */
+    width: 900px;
+    height: 840px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Group_Item_Add_Table
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0px;
+}
+
+.Group_Item_Add_Table td:first-child
+{
+    width: 150px;
+}
+
+.btn_Group_Item_Add
+{
+    width: 130px;
+    height: 50px;
+    border: none;
+    border-radius: 7px;
+    background-color: #FF3636;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 20px 0px;
+    margin-right: 20px;
+}
+
+
+.Group_Item_Add_Store
+{
+    border: none;
+    font-size: 28px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.Group_Item_Add_Table input
+{
+    width: 210px;
+    height: 30px;
+    outline: none;
+    padding: 0px 5px;
+    border: 1px solid #ccc;
+}
+
+.Group_Item_Add_Table input:focus
+{
+    border: 1px solid #FF3636;
+}

@@ -1,0 +1,276 @@
+.layout_Manager {
+  /* display: grid; */
+  /* grid-template-columns: repeat(19, 100px); */
+  grid-auto-rows: minmax(30px, auto);
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.box_Manager_Menu {
+  /* grid-column: 4 / 6; */
+  width: 200px;
+  grid-auto-rows: minmax(30px, auto);
+
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0px;
+}
+
+.layout_Manager_Contents {
+  /* grid-column: 6 / 16; */
+  width: 1000px;
+  grid-auto-rows: minmax(30px, auto);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn_ManagerMenu {
+  border: none;
+  border-bottom: 1px solid lightgray;
+  background-color: white;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  padding: 2px;
+  margin: 20px 2px;
+}
+
+.box_Manager_User_Detail,
+.box_Manager_Store_Detail,
+.box_Manager_StoreAuth_Detail,
+.box_Manager_Group_Item_Detail {
+  grid-auto-rows: minmax(30px, auto);
+
+  width: 900px;
+  margin: 50px 0px;
+  text-align: center;
+}
+
+.box_Manager_User_Info,
+.box_Manager_Store_Info,
+.box_Manager_StoreAuth_Info,
+.box_Manager_Group_Item_Info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.box_Manager_User_Info th,
+.box_Manager_User_Info td,
+.box_Manager_Store_Info th,
+.box_Manager_Store_Info td,
+.box_Manager_StoreAuth_Info th,
+.box_Manager_StoreAuth_Info td,
+.box_Manager_Group_Item_Info th,
+.box_Manager_Group_Item_Info td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.box_Manager_User_Info th,
+.box_Manager_Store_Info th,
+.box_Manager_StoreAuth_Info th,
+.box_Manager_Group_Item_Info th {
+  font-size: 17px;
+  font-weight: 700;
+  background-color: #f8c8c8;
+  text-align: center;
+}
+
+.box_Manager_User_Info td,
+.box_Manager_Store_Info td,
+.box_Manager_StoreAuth_Info td,
+.box_Manager_Group_Item_Info td {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.table_Manager_User_Info,
+.table_Manager_Store_Info,
+.table_Manager_StoreAuth_Info,
+.table_Manager_Group_Item_Info {
+  width: 100%;
+  border-collapse: collapse;
+  cursor: default;
+}
+
+.table_Manager_User_Info button,
+.table_Manager_Store_Info button,
+.table_Manager_StoreAuth_Info button {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 60px;
+  height: 25px;
+}
+
+.table_Manager_User_Info button:hover,
+.table_Manager_Store_Info button:hover,
+.table_Manager_StoreAuth_Info button:hover,
+.manager_Group_Item_Date:focus {
+  border: 1px solid #ff3636;
+}
+
+.box_Manager_User_Info td:first-child,
+.box_Manager_User_Info td:nth-child(2),
+.box_Manager_User_Info td:nth-child(3) {
+  width: 10%;
+}
+
+.box_Manager_User_Info td:nth-child(4) {
+  width: 45%;
+}
+
+.box_Manager_User_Info td:nth-child(5),
+.box_Manager_User_Info td:nth-child(6),
+.box_Manager_Store_Info td:nth-child(4),
+.box_Manager_Store_Info td:nth-child(5),
+.box_Manager_StoreAuth_Info td:nth-child(4) {
+  text-align: center;
+  width: 10%;
+}
+
+.box_Manager_Store_Info td:nth-child(1),
+.box_Manager_Store_Info td:nth-child(2),
+.box_Manager_Store_Info td:nth-child(3) td {
+  width: 25%;
+}
+
+.box_Manager_StoreAuth_Info td:nth-child(1),
+.box_Manager_StoreAuth_Info td:nth-child(2),
+.box_Manager_StoreAuth_Info td:nth-child(3) {
+  width: 30%;
+}
+
+.modal_Manager_User_Modi_Overlay,
+.modal_Manager_Store_Modi_Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal_Manager_Store_Modi {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+}
+
+.modal_Manager_User_Modi {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 1000px;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-right: 90px;
+  gap: 30px;
+}
+
+.btn_Modal_Manager_User_Modi,
+.btn_Modal_Manager_Store_Modi {
+  width: 130px;
+  height: 50px;
+  border: none;
+  border-radius: 7px;
+  background-color: #f8c8c8;
+  color: black;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 115px;
+}
+
+.table_Modal_Manager_User_Modi,
+.table_Modal_Manager_Store_Modi {
+  border-collapse: collapse;
+
+  font-size: 17px;
+  height: 250px;
+}
+
+.table_Modal_Manager_User_Modi input,
+.table_Modal_Manager_Store_Modi input {
+  font-size: 17px;
+  outline: none;
+  width: 450px;
+  height: 40px;
+  padding: 0px 10px;
+}
+
+.table_Modal_Manager_User_Modi td:first-child,
+.table_Modal_Manager_Store_Modi td:first-child {
+  width: 100px;
+  height: 50px;
+  font-weight: 700;
+}
+
+.pagination_User,
+.pagination_Store {
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.btn_ManagerMenu:focus,
+.pagination_User:focus,
+.pagination_Store:focus {
+  color: #ff3636;
+}
+
+.box_Manager_Group_Item_Set {
+  margin-bottom: 20px;
+}
+
+.manager_Group_Item_Date {
+  height: 30px;
+  width: 216px;
+  margin-right: 70px;
+  outline: none;
+  border: 1px solid #ddd;
+}
+
+.box_Manager_Group_Item_Set button {
+  width: 110px;
+  height: 40px;
+  border: none;
+  border-radius: 7px;
+  background-color: #f8c8c8;
+  color: black;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.table_Manager_Group_Item_Date {
+  font-size: 17px;
+  font-weight: 600;
+  margin-left: 30%;
+}
+
+.table_Manager_Store_Info tr:nth-child(n + 2) td:nth-child(2) {
+  cursor: pointer;
+}

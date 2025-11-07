@@ -1,0 +1,131 @@
+.layout_Group_Item_Detail_Contents
+{  
+    display: grid;
+    grid-template-columns: repeat(38, 50px);
+    grid-auto-rows: minmax(15px, auto);
+    padding-top: 80px;
+}
+
+.box_Group_Item_Category
+{
+    grid-column: 10 / 12;
+    grid-row: 2 / 3;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Img
+{
+    grid-column: 10 / 18;
+    grid-row: 4 / 17;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Store
+{
+    grid-column: 20 / 28;
+    grid-row: 4 / 5;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Name
+{
+    grid-column: 20 / 28;
+    grid-row: 6 / 7;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Opt
+{
+    grid-column: 20 / 28;
+    grid-row: 8 / 9;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Limit
+{
+    grid-column: 20 / 28;
+    grid-row: 10 / 11;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Amount
+{
+    grid-column: 20 / 28;
+    grid-row: 12 / 13;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Price
+{
+    grid-column: 20 / 28;
+    grid-row: 14 / 15;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Pay
+{
+    grid-column: 20 / 28;
+    grid-row: 16 / 17;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border: 1px solid black;
+}
+
+.box_Group_Item_Contents
+{
+    grid-column: 10 / 28;
+    grid-row: 19 / 60;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 30px;
+    border: 1px solid black;
+}
