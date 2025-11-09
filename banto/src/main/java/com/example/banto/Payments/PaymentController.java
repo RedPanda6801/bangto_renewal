@@ -36,21 +36,21 @@ public class PaymentController {
 	}
 	
 	// 판매물품 일괄 처리(판매자) -> 배송중, 배송완료 처리
-	@PostMapping("/seller/payment/process/{deliver}")
+	@PutMapping("/seller/payment/process/{deliver}")
 	public ResponseEntity<?> processPayment(@RequestBody List<SoldItemDTO> dto, @PathVariable("deliver") String deliver) {
 			payService.processPayment(dto, deliver);
 			return ResponseEntity.ok().body("구매/판매물품 처리 완료");
 	}
 	
 	// 매장 판매내역 확인(판매자)
-	@GetMapping("/seller/payment/get-store-list/{storeId}/{page}")
+	@GetMapping("/seller/payment/get-list/store/{storeId}/{page}")
 	public ResponseEntity<?> getSoldListForSeller(@PathVariable("storeId") Long storeId, @PathVariable("page") Integer page) {
 			PageDTO soldItemList = payService.getSoldListForSeller(storeId, page);
 			return ResponseEntity.ok().body(soldItemList);
 	}
 	
 	// 매장 판매내역 확인(관리자)
-	@GetMapping("/admin/payment/get-list/{storeId}/{page}")
+	@GetMapping("/admin/payment/get-list/store/{storeId}/{page}")
 	public ResponseEntity<?> getSoldListForAdmin(@PathVariable("storeId") Long storeId, @PathVariable("page") Integer page) {
 		PageDTO soldItemList = payService.getSoldListForAdmin(storeId, page);
 		return ResponseEntity.ok().body(soldItemList);

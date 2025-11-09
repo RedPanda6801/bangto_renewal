@@ -33,7 +33,7 @@ public class CartController {
 
 	
 	// 장바구니 삭제
-	@DeleteMapping("/cart/delete/{optionId}")
+	@DeleteMapping("/cart/{optionId}")
 	public ResponseEntity<?> deleteCart(@PathVariable("optionId") Long optionId, HttpServletRequest request, HttpServletResponse response) {
 		cartService.delete(optionId, request, response);
 		return ResponseEntity.ok().body("장바구니 삭제 완료");

@@ -23,7 +23,7 @@ public class CommentController {
 	}
 	
 	// 후기 작성
-	@PostMapping(path = "/comment/write", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(path = "/comment", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> writeComment(@RequestPart("dto") CommentDTO dto, @RequestPart(name = "files", required = false) List<MultipartFile> files) {
 		commentService.create(dto, files);
 		return ResponseEntity.ok().body("후기 작성에 성공했습니다.");

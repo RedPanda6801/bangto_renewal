@@ -23,7 +23,7 @@ public class QNAController {
 	}
 
 	// QNA 추가(고객)
-	@PostMapping(path = "/qna/write", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(path = "/qna", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> createQNA(@Valid @RequestBody QNADTO qnaDTO
 	, List<MultipartFile> files) {
 		qnaService.create(qnaDTO, files);
@@ -66,7 +66,7 @@ public class QNAController {
 	}
 
 	// QNA 삭제
-	@DeleteMapping("/qna/delete/{qnaId}")
+	@DeleteMapping("/qna/{qnaId}")
 	public ResponseEntity<?> deleteQNA(@PathVariable("qnaId") Long qnaId) {
 		qnaService.delete(qnaId);
 		return ResponseEntity.ok().body("삭제에 성공했습니다");

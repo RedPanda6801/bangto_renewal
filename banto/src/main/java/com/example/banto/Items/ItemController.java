@@ -19,14 +19,8 @@ public class ItemController {
 
 	private final ItemService itemService;
 
-//	@PostMapping("/admin/item/add/test-data")
-//	public ResponseEntity<?> setTestDataWithFixtureMonkey(){
-//		itemService.setTestData();
-//		return ResponseEntity.ok().body("Create Success");
-//	}
-
 	// 단일 물건 세부 조회
-	@GetMapping("/item/get-detail/{itemId}")
+	@GetMapping("/item/{itemId}")
 	public ResponseEntity<?> getItemDetail(@PathVariable("itemId") Long itemId) {
 		ItemDTO item = itemService.getItemDetail(itemId);
 		return ResponseEntity.ok().body(item);
@@ -89,21 +83,21 @@ public class ItemController {
 	 */
 
 	// 물건 추가
-	@PostMapping(path = "/seller/item/add-item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(path = "/seller/item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> addItem(@Valid @RequestPart("dto") ItemDTO itemDTO, @RequestPart(name = "files", required = false) List<MultipartFile> files) {
 		itemService.addItem(itemDTO, files);
 		return ResponseEntity.ok().body("물건 추가에 성공했습니다.");
 	}
 
 	// 물건 수정
-	@PutMapping(path = "/seller/item/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PutMapping(path = "/seller/item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> updateItem(@RequestPart("dto") ItemDTO itemDTO, @RequestPart(name = "files", required = false) List<MultipartFile> files) {
 			itemService.updateItem(itemDTO, files);
 			return ResponseEntity.ok().body("물건 수정에 성공했습니다.");
 	}
 
 	// 아이템 삭제
-	@PostMapping("/seller/item/delete")
+	@DeleteMapping("/seller/item")
 	public ResponseEntity<?> deleteItem(@RequestBody ItemDTO itemDTO) {
 		itemService.deleteItem(itemDTO);
 		return ResponseEntity.ok().body("물건 삭제에 성공했습니다.");
