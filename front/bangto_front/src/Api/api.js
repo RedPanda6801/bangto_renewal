@@ -1,7 +1,7 @@
 // src/api/index.js
 
 // base URL은 환경변수에서 불러옴
-const BASE_URL = process.env.REACT_APP_API_URL + "/api";
+const BASE_URL = process.env.REACT_APP_BACKEND_SERVER_PORT;
 
 // 기능별 endpoint를 모듈처럼 구성
 export const API = {
@@ -29,7 +29,7 @@ export const API = {
   ITEM: {
     DETAIL: `${BASE_URL}/item`,
     LIST: `${BASE_URL}/item/get-list`,
-    FILTERED_LIST: `${BASE_URL}/store/get-list/filtered`,
+    FILTERED_LIST: `${BASE_URL}/item/get-list/filtered`,
     URL: `${BASE_URL}/seller/item/`,
   },
   OPTION: {
