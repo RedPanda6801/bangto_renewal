@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.banto.Boards.Comments.Comments;
+import com.example.banto.Favorites.Favorites;
 import com.example.banto.Payments.Payments;
 import com.example.banto.Boards.Qnas.QNAs;
 import com.example.banto.SellerAuths.SellerAuths;
@@ -62,10 +63,10 @@ public class Users {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SellerAuths> sellerAuths;
 
-/*    @JsonIgnore
+    @JsonIgnore
     //@ToString.Exclude
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Favorites> favorites;*/
+    private List<Favorites> favorites;
 
     // 1 : N Relation (Cascade = null)
     @JsonIgnore
